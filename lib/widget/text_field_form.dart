@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
 
 import '../common/app_colors.dart';
+import '../common/injection_container.dart';
+import '../common/text_styles.dart';
 
 class TextFieldForm extends StatelessWidget {
   final String title;
   const TextFieldForm({Key? key, required this.title}) : super(key: key);
+
+  TextStyle get titleStyle =>
+      sl<TextStyles>().titleDarkBold.copyWith(fontSize: 34.0);
 
   @override
   Widget build(BuildContext context) {
@@ -14,25 +19,22 @@ class TextFieldForm extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "$title:",
-            style: const TextStyle(fontSize: 14.0),
+            title.toUpperCase(),
+            style: titleStyle,
           ),
-          const SizedBox(height: 8.0),
           const TextField(
-            cursorColor: AppColors.black60,
+            cursorColor: AppColors.yellow,
             style: TextStyle(
-                fontSize: 12,
+                fontSize: 34,
                 fontStyle: FontStyle.normal,
-                color: AppColors.black60,
+                color: AppColors.primary,
                 decorationThickness: 0),
             decoration: InputDecoration(
               contentPadding: EdgeInsets.all(14.0),
               fillColor: Colors.white,
-              enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.all(Radius.circular(10.0)),
-              ),
+              focusColor: AppColors.yellow,
               focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                borderSide: BorderSide(color: AppColors.yellow),
               ),
             ),
           ),

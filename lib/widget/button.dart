@@ -13,20 +13,20 @@ class Button extends StatelessWidget {
         padding: const EdgeInsets.all(24.0),
         child: ElevatedButton(
           style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.white,
+            backgroundColor: AppColors.yellow,
             elevation: 0,
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10.0)),
-            minimumSize: const Size(180, 45),
+            minimumSize: const Size(380, 95),
           ),
           onPressed: () => Navigator.of(context).pushNamed(''),
           child: Text(
-            CommonStrings.start,
+            CommonStrings.start.toUpperCase(),
             style: const TextStyle(
               fontWeight: FontWeight.w700,
-              color: AppColors.black60,
+              color: AppColors.primary,
               fontStyle: FontStyle.normal,
-              fontSize: 18,
+              fontSize: 34,
             ),
           ),
         ),

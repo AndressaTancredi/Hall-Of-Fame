@@ -1,8 +1,10 @@
+import 'package:calcada_da_fama/widget/button.dart';
 import 'package:flutter/material.dart';
 
 import '../common/app_colors.dart';
 import '../common/common_strings.dart';
-import '../widget/button.dart';
+import '../common/injection_container.dart';
+import '../common/text_styles.dart';
 import '../widget/dropdown_field_form.dart';
 import '../widget/text_field_form.dart';
 
@@ -14,33 +16,47 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  TextStyle get titleStyle => sl<TextStyles>().titleDarkBold;
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: AppColors.black15,
+        backgroundColor: AppColors.primary,
         body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 44.0, vertical: 44.0),
+          padding: const EdgeInsets.symmetric(horizontal: 150.0),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
+              Padding(
+                padding: const EdgeInsets.all(150.0),
+                child: Text(
+                  CommonStrings.hallOfFame.toUpperCase(),
+                  style: titleStyle.copyWith(
+                      fontSize: 60.0, color: AppColors.yellow),
+                ),
+              ),
               Container(
-                padding: const EdgeInsets.only(
-                    left: 14.0, right: 14.0, bottom: 14.0),
-                decoration: BoxDecoration(
+                height: 1200,
+                padding: const EdgeInsets.all(54.0),
+                decoration: const BoxDecoration(
                   color: Colors.white,
-                  borderRadius: BorderRadius.circular(16.0),
+                  borderRadius: BorderRadius.all(Radius.circular(40)),
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     TextFieldForm(title: CommonStrings.name),
+                    const SizedBox(height: 74.0),
                     TextFieldForm(title: CommonStrings.yearsOld),
+                    const SizedBox(height: 74.0),
                     DropdownFieldForm(title: CommonStrings.gender),
+                    const SizedBox(height: 74.0),
+                    TextFieldForm(title: CommonStrings.voucher),
                   ],
                 ),
               ),
-              const SizedBox(height: 24.0),
-              TextFieldForm(title: CommonStrings.voucher),
+              const SizedBox(height: 150.0),
               const Button(),
             ],
           ),
