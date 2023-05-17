@@ -1,9 +1,11 @@
 import 'package:calcada_da_fama/pages/home_page.dart';
 import 'package:flutter/material.dart';
 
+import '../common/injection_container.dart' as get_it;
 import 'common/app_router.dart';
 
-void main() {
+Future main() async {
+  await get_it.init();
   runApp(const MyApp());
 }
 
