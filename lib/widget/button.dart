@@ -19,7 +19,7 @@ class Button extends StatelessWidget {
             elevation: 0,
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10.0)),
-            minimumSize: const Size(380, 95),
+            minimumSize: const Size(450, 150),
           ),
           onPressed: () => Navigator.of(context).pushNamed(routePath),
           child: Text(
