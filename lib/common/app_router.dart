@@ -13,6 +13,8 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => const ScanPage());
       case '/signature_page':
         return MaterialPageRoute(builder: (_) => const SignaturePage());
+      case '/result_page':
+        return MaterialPageRoute(builder: (_) => const SignaturePage());
       default:
         throw ArgumentError('Inexistent route: s${routeSettings.name}');
     }
