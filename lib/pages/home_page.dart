@@ -57,7 +57,10 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
               const SizedBox(height: 150.0),
-              const Button(),
+              Button(
+                title: CommonStrings.start.toUpperCase(),
+                routePath: '/scan_page',
+              ),
             ],
           ),
         ),
