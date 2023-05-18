@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 
 import '../common/app_colors.dart';
-import '../common/common_strings.dart';
 
 class Button extends StatelessWidget {
-  const Button({Key? key}) : super(key: key);
+  final String title;
+  final String routePath;
+  const Button({Key? key, required this.title, required this.routePath})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,9 +21,9 @@ class Button extends StatelessWidget {
                 borderRadius: BorderRadius.circular(10.0)),
             minimumSize: const Size(380, 95),
           ),
-          onPressed: () => Navigator.of(context).pushNamed(''),
+          onPressed: () => Navigator.of(context).pushNamed(routePath),
           child: Text(
-            CommonStrings.start.toUpperCase(),
+            title,
             style: const TextStyle(
               fontWeight: FontWeight.w700,
               color: AppColors.primary,
