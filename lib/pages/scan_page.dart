@@ -56,8 +56,7 @@ class ScanPage extends StatelessWidget {
                 padding: const EdgeInsets.only(top: 125.0),
                 child: Button(
                   title: CommonStrings.finish.toUpperCase(),
-                  routePath:
-                      '/home_page', //Mandar rota para tela de assinatura quando for criada.
+                  routePath: '/signature_page',
                 ),
               ),
               const SizedBox(height: 250)
