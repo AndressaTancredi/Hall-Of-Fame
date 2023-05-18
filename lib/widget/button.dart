@@ -11,25 +11,23 @@ class Button extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Padding(
-        padding: const EdgeInsets.all(24.0),
-        child: ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            backgroundColor: AppColors.yellow,
-            elevation: 0,
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10.0)),
-            minimumSize: const Size(450, 150),
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: AppColors.yellow,
+          elevation: 0,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10.0),
           ),
-          onPressed: () => Navigator.of(context).pushNamed(routePath),
-          child: Text(
-            title,
-            style: const TextStyle(
-              fontWeight: FontWeight.w700,
-              color: AppColors.primary,
-              fontStyle: FontStyle.normal,
-              fontSize: 34,
-            ),
+          minimumSize: const Size(double.infinity, 150),
+        ),
+        onPressed: () => Navigator.of(context).pushNamed(routePath),
+        child: Text(
+          title,
+          style: const TextStyle(
+            fontWeight: FontWeight.w700,
+            color: AppColors.primary,
+            fontStyle: FontStyle.normal,
+            fontSize: 34,
           ),
         ),
       ),
