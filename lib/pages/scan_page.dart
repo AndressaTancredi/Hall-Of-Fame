@@ -23,7 +23,7 @@ class ScanPage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Padding(
-                padding: const EdgeInsets.all(125.0),
+                padding: const EdgeInsets.symmetric(vertical: 100.0),
                 child: Text(
                   CommonStrings.scanOrientation,
                   textAlign: TextAlign.center,
@@ -53,13 +53,13 @@ class ScanPage extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(top: 125.0),
+                padding: const EdgeInsets.only(top: 100.0),
                 child: Button(
                   title: CommonStrings.finish.toUpperCase(),
                   routePath: '/signature_page',
                 ),
               ),
-              const SizedBox(height: 250)
+              const SizedBox(height: 100)
             ],
           ),
         ),

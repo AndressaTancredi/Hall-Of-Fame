@@ -24,44 +24,48 @@ class _HomePageState extends State<HomePage> {
       child: Scaffold(
         backgroundColor: AppColors.primary,
         body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 150.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(150.0),
-                child: Text(
-                  CommonStrings.hallOfFame.toUpperCase(),
-                  style: titleStyle.copyWith(
-                      fontSize: 60.0, color: AppColors.yellow),
+          padding: const EdgeInsets.symmetric(horizontal: 50.0),
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 50.0, vertical: 150),
+                  child: Text(
+                    CommonStrings.hallOfFame.toUpperCase(),
+                    style: titleStyle.copyWith(
+                        fontSize: 60.0, color: AppColors.yellow),
+                  ),
                 ),
-              ),
-              Container(
-                height: 1200,
-                padding: const EdgeInsets.all(54.0),
-                decoration: const BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.all(Radius.circular(40)),
+                Container(
+                  height: 900,
+                  padding: const EdgeInsets.all(50.0),
+                  decoration: const BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.all(Radius.circular(40)),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      TextFieldForm(title: CommonStrings.name),
+                      const SizedBox(height: 74.0),
+                      TextFieldForm(title: CommonStrings.yearsOld),
+                      const SizedBox(height: 74.0),
+                      DropdownFieldForm(title: CommonStrings.gender),
+                      const SizedBox(height: 74.0),
+                      TextFieldForm(title: CommonStrings.voucher),
+                    ],
+                  ),
                 ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    TextFieldForm(title: CommonStrings.name),
-                    const SizedBox(height: 74.0),
-                    TextFieldForm(title: CommonStrings.yearsOld),
-                    const SizedBox(height: 74.0),
-                    DropdownFieldForm(title: CommonStrings.gender),
-                    const SizedBox(height: 74.0),
-                    TextFieldForm(title: CommonStrings.voucher),
-                  ],
+                const SizedBox(height: 150.0),
+                Button(
+                  title: CommonStrings.start.toUpperCase(),
+                  routePath: '/scan_page',
                 ),
-              ),
-              const SizedBox(height: 150.0),
-              Button(
-                title: CommonStrings.start.toUpperCase(),
-                routePath: '/scan_page',
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

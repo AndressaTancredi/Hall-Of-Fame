@@ -25,7 +25,7 @@ class SignaturePage extends StatelessWidget {
         backgroundColor: AppColors.primary,
         body: Padding(
           padding:
-              const EdgeInsets.symmetric(vertical: 225.0, horizontal: 40.0),
+              const EdgeInsets.symmetric(vertical: 200.0, horizontal: 40.0),
           child: Column(
             children: [
               Center(
@@ -49,10 +49,11 @@ class SignaturePage extends StatelessWidget {
                     height: 700,
                     backgroundColor: AppColors.black15),
               ),
+              const SizedBox(height: 150),
               Expanded(
                 child: Button(
                   title: CommonStrings.immortalize.toUpperCase(),
-                  routePath: "",
+                  routePath: "/home_page",
                 ),
               ),
             ],
