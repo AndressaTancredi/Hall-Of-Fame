@@ -10,7 +10,7 @@ import '../widget/button.dart';
 class ScanPage extends StatelessWidget {
   const ScanPage({Key? key}) : super(key: key);
 
-  TextStyle get titleStyle => sl<TextStyles>().titleDarkBold;
+  TextStyle get titleStyle => sl<TextStyles>().titleYellow;
 
   @override
   Widget build(BuildContext context) {
@@ -24,12 +24,8 @@ class ScanPage extends StatelessWidget {
             children: [
               Padding(
                 padding: const EdgeInsets.all(125.0),
-                child: Text(
-                  CommonStrings.scanOrientation,
-                  textAlign: TextAlign.center,
-                  style: titleStyle.copyWith(
-                      fontSize: 40.0, color: AppColors.yellow),
-                ),
+                child: Text(CommonStrings.scanOrientation,
+                    textAlign: TextAlign.center, style: titleStyle),
               ),
               Expanded(
                 child: ScanningEffect(
@@ -56,7 +52,8 @@ class ScanPage extends StatelessWidget {
                 padding: const EdgeInsets.only(top: 125.0),
                 child: Button(
                   title: CommonStrings.finish.toUpperCase(),
-                  routePath: '/signature_page',
+                  onPressed: () =>
+                      Navigator.of(context).pushNamed('/signature_page'),
                 ),
               ),
               const SizedBox(height: 250)

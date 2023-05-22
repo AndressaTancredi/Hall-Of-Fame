@@ -16,7 +16,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  TextStyle get titleStyle => sl<TextStyles>().titleDarkBold;
+  TextStyle get titleStyle => sl<TextStyles>().titleYellow;
 
   @override
   Widget build(BuildContext context) {
@@ -32,8 +32,7 @@ class _HomePageState extends State<HomePage> {
                 padding: const EdgeInsets.all(150.0),
                 child: Text(
                   CommonStrings.hallOfFame.toUpperCase(),
-                  style: titleStyle.copyWith(
-                      fontSize: 60.0, color: AppColors.yellow),
+                  style: titleStyle.copyWith(fontSize: 60.0),
                 ),
               ),
               Container(
@@ -59,7 +58,7 @@ class _HomePageState extends State<HomePage> {
               const SizedBox(height: 150.0),
               Button(
                 title: CommonStrings.start.toUpperCase(),
-                routePath: '/scan_page',
+                onPressed: () => Navigator.of(context).pushNamed('/scan_page'),
               ),
             ],
           ),
