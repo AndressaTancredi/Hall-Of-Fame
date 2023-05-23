@@ -6,8 +6,8 @@ class CommonStrings {
   static String get start => "Começar";
   static String get hallOfFame => "Calçada da Fama";
   static String get scanOrientation =>
-      "Posicione suas mãos na tela por 5 segundos para serem escaneadas e criar sua foto na Calçada da Fama!";
-  static String get signatureOrientation => "Agora capriche no seu autógrafo.";
+      "Posicione suas mãos na tela por 5 segundos para serem escaneadas.";
+  static String get signatureOrientation => "Agora capriche no seu autógrafo!";
   static List<String> get genderList =>
       ['Masculino', 'Feminino', 'Prefiro não informar'];
   static String get finish => "Terminar";

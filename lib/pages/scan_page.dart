@@ -23,9 +23,13 @@ class ScanPage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Padding(
-                padding: const EdgeInsets.all(125.0),
-                child: Text(CommonStrings.scanOrientation,
-                    textAlign: TextAlign.center, style: titleStyle),
+                padding: const EdgeInsets.symmetric(vertical: 100.0),
+                child: Text(
+                  CommonStrings.scanOrientation,
+                  textAlign: TextAlign.center,
+                  style: titleStyle.copyWith(
+                      fontSize: 40.0, color: AppColors.yellow),
+                ),
               ),
               Expanded(
                 child: ScanningEffect(
@@ -49,14 +53,14 @@ class ScanPage extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(top: 125.0),
+                padding: const EdgeInsets.only(top: 100.0),
                 child: Button(
                   title: CommonStrings.finish.toUpperCase(),
                   onPressed: () =>
                       Navigator.of(context).pushNamed('/signature_page'),
                 ),
               ),
-              const SizedBox(height: 250)
+              const SizedBox(height: 100)
             ],
           ),
         ),

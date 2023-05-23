@@ -24,27 +24,30 @@ class _HomePageState extends State<HomePage> {
       child: Scaffold(
         backgroundColor: AppColors.primary,
         body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 150.0),
+          padding: const EdgeInsets.symmetric(horizontal: 50.0),
           child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Padding(
-                  padding: const EdgeInsets.all(150.0),
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 50.0, vertical: 150),
                   child: Text(
                     CommonStrings.hallOfFame.toUpperCase(),
-                    style: titleStyle.copyWith(fontSize: 60.0),
+                    style: titleStyle.copyWith(
+                        fontSize: 60.0, color: AppColors.yellow),
                   ),
                 ),
                 Container(
-                  height: 1200,
-                  padding: const EdgeInsets.all(54.0),
+                  height: 900,
+                  padding: const EdgeInsets.all(50.0),
                   decoration: const BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.all(Radius.circular(40)),
                   ),
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       TextFieldForm(title: CommonStrings.name),
                       const SizedBox(height: 74.0),

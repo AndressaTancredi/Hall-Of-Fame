@@ -27,7 +27,7 @@ class SignaturePage extends StatelessWidget {
         backgroundColor: AppColors.primary,
         body: Padding(
           padding:
-              const EdgeInsets.symmetric(vertical: 225.0, horizontal: 40.0),
+              const EdgeInsets.symmetric(vertical: 200.0, horizontal: 40.0),
           child: Column(
             children: [
               Center(
@@ -51,6 +51,7 @@ class SignaturePage extends StatelessWidget {
                     width: 1400,
                     backgroundColor: AppColors.black15),
               ),
+              const SizedBox(height: 150),
               Expanded(
                 child: Button(
                   title: CommonStrings.immortalize.toUpperCase(),
@@ -84,5 +85,3 @@ class SignaturePage extends StatelessWidget {
     }
   }
 }
-//https://suryadevsingh24032000.medium.com/share-content-with-the-flutter-share-plugin-896570bd1696
-//https://pub.dev/documentation/share/latest/
