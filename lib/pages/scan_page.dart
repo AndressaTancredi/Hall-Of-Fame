@@ -131,6 +131,7 @@ class _ScanPageState extends State<ScanPage> {
                     title: CommonStrings.proceed.toUpperCase(),
                     routePath: '/signature_page',
                   ),
+
                 ),
               const SizedBox(height: 100)
             ],

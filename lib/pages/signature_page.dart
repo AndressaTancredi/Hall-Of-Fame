@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:signature/signature.dart';
 
@@ -10,14 +12,14 @@ import '../widget/button.dart';
 class SignaturePage extends StatelessWidget {
   const SignaturePage({Key? key}) : super(key: key);
 
-  TextStyle get titleStyle => sl<TextStyles>().titleDarkBold;
+  TextStyle get titleStyle => sl<TextStyles>().titleYellow;
 
   @override
   Widget build(BuildContext context) {
     final SignatureController controller = SignatureController(
       penStrokeWidth: 5,
       penColor: AppColors.primary,
-      exportBackgroundColor: Colors.blue,
+      exportBackgroundColor: Colors.transparent,
     );
 
     return SafeArea(
@@ -31,8 +33,7 @@ class SignaturePage extends StatelessWidget {
               Center(
                 child: Text(
                   CommonStrings.signatureOrientation,
-                  style: titleStyle.copyWith(
-                      fontSize: 40.0, color: AppColors.yellow),
+                  style: titleStyle,
                 ),
               ),
               const SizedBox(height: 250),
@@ -46,14 +47,24 @@ class SignaturePage extends StatelessWidget {
                 ),
                 child: Signature(
                     controller: controller,
-                    height: 700,
+                    height: 800,
+                    width: 1400,
                     backgroundColor: AppColors.black15),
               ),
               const SizedBox(height: 150),
               Expanded(
                 child: Button(
                   title: CommonStrings.immortalize.toUpperCase(),
-                  routePath: "/home_page",
+                  onPressed: () =>
+                      _convertSignatureToImage(context, controller).then(
+                    (photo) {
+                      Navigator.pushNamed(
+                        context,
+                        '/result_page',
+                        arguments: {'photo': photo},
+                      );
+                    },
+                  ),
                 ),
               ),
             ],
@@ -61,5 +72,16 @@ class SignaturePage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Future<Uint8List> _convertSignatureToImage(
+      BuildContext context, SignatureController controller) async {
+    final Uint8List? data =
+        await controller.toPngBytes(height: 800, width: 1400);
+    if (data != null) {
+      return data;
+    } else {
+      throw Exception('Failed to convert signature to image.');
+    }
   }
 }

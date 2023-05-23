@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 
 import '../common/app_colors.dart';
+import '../common/injection_container.dart';
+import '../common/text_styles.dart';
 
 class Button extends StatelessWidget {
   final String title;
-  final String routePath;
-  const Button({Key? key, required this.title, required this.routePath})
+  final VoidCallback onPressed;
+  const Button({Key? key, required this.title, required this.onPressed})
       : super(key: key);
+
+  TextStyle get buttonStyle => sl<TextStyles>().buttonText;
 
   @override
   Widget build(BuildContext context) {
@@ -20,15 +24,10 @@ class Button extends StatelessWidget {
           ),
           minimumSize: const Size(double.infinity, 150),
         ),
-        onPressed: () => Navigator.of(context).pushNamed(routePath),
+        onPressed: onPressed,
         child: Text(
           title,
-          style: const TextStyle(
-            fontWeight: FontWeight.w700,
-            color: AppColors.primary,
-            fontStyle: FontStyle.normal,
-            fontSize: 34,
-          ),
+          style: buttonStyle,
         ),
       ),
     );
