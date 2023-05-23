@@ -12,4 +12,7 @@ class CommonStrings {
       ['Masculino', 'Feminino', 'Prefiro não informar'];
   static String get finish => "Terminar";
   static String get immortalize => "Imortalizar na calçada da fama";
+  static String get immortalized =>
+      "Seu registro na calçada da fama foi imortalizado com sucesso!";
+  static String get share => "Compartilhar";
 }

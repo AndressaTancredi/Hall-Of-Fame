@@ -18,4 +18,19 @@ class TextStyles {
     fontStyle: FontStyle.normal,
     color: AppColors.primary,
   );
+
+  final titleYellow = const TextStyle(
+    fontFamily: "TTTravels",
+    fontWeight: FontWeight.w700,
+    fontSize: 40,
+    fontStyle: FontStyle.normal,
+    color: AppColors.yellow,
+  );
+
+  final buttonText = const TextStyle(
+    fontWeight: FontWeight.w700,
+    color: AppColors.primary,
+    fontStyle: FontStyle.normal,
+    fontSize: 34,
+  );
 }

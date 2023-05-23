@@ -16,7 +16,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  TextStyle get titleStyle => sl<TextStyles>().titleDarkBold;
+  TextStyle get titleStyle => sl<TextStyles>().titleYellow;
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +62,8 @@ class _HomePageState extends State<HomePage> {
                 const SizedBox(height: 150.0),
                 Button(
                   title: CommonStrings.start.toUpperCase(),
-                  routePath: '/scan_page',
+                  onPressed: () =>
+                      Navigator.of(context).pushNamed('/scan_page'),
                 ),
               ],
             ),
