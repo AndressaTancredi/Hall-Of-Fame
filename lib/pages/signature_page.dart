@@ -17,8 +17,8 @@ class SignaturePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final SignatureController controller = SignatureController(
-      penStrokeWidth: 5,
-      penColor: AppColors.primary,
+      penStrokeWidth: 10,
+      penColor: Colors.grey,
       exportBackgroundColor: Colors.transparent,
     );
 
@@ -27,7 +27,7 @@ class SignaturePage extends StatelessWidget {
         backgroundColor: AppColors.primary,
         body: Padding(
           padding:
-              const EdgeInsets.symmetric(vertical: 200.0, horizontal: 40.0),
+              const EdgeInsets.symmetric(vertical: 250.0, horizontal: 60.0),
           child: Column(
             children: [
               Center(
@@ -38,7 +38,6 @@ class SignaturePage extends StatelessWidget {
               ),
               const SizedBox(height: 250),
               Container(
-                padding: const EdgeInsets.all(10.0),
                 decoration: BoxDecoration(
                   color: AppColors.black15,
                   border: Border.all(
@@ -47,8 +46,8 @@ class SignaturePage extends StatelessWidget {
                 ),
                 child: Signature(
                     controller: controller,
-                    height: 800,
-                    width: 1400,
+                    height: 400,
+                    width: 900,
                     backgroundColor: AppColors.black15),
               ),
               const SizedBox(height: 150),
@@ -81,7 +80,7 @@ class SignaturePage extends StatelessWidget {
     if (data != null) {
       return data;
     } else {
-      throw Exception('Failed to convert signature to image.');
+      throw Exception(CommonStrings.errorImageToSignature);
     }
   }
 }

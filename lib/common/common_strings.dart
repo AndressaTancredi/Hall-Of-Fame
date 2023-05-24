@@ -15,4 +15,7 @@ class CommonStrings {
   static String get immortalized =>
       "Seu registro na calçada da fama foi imortalizado com sucesso!";
   static String get share => "Compartilhar";
+  static String get time => "Tempo restante: ";
+  static String get errorImageToSignature =>
+      'Failed to convert signature to image.';
 }

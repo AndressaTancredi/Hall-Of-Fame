@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:scanning_effect/scanning_effect.dart';
@@ -11,6 +12,12 @@ import '../widget/button.dart';
 
 class ScanPage extends StatefulWidget {
   const ScanPage({Key? key}) : super(key: key);
+
+  static const List<String> imageAssets = [
+    'assets/images/image1.jpg',
+    'assets/images/image2.jpg',
+    'assets/images/image3.jpg',
+  ];
 
   @override
   State<ScanPage> createState() => _ScanPageState();
@@ -45,6 +52,8 @@ class _ScanPageState extends State<ScanPage> {
 
   @override
   Widget build(BuildContext context) {
+    final int randomIndex = Random().nextInt(ScanPage.imageAssets.length);
+    final String backgroundImage = ScanPage.imageAssets[randomIndex];
     return SafeArea(
       child: Scaffold(
         backgroundColor: AppColors.primary,
@@ -65,7 +74,7 @@ class _ScanPageState extends State<ScanPage> {
                 ),
               ),
               Text(
-                'Tempo restante: $countdown',
+                '${CommonStrings.time} $countdown',
                 style: titleStyle.copyWith(
                   fontSize: 40.0,
                   color: AppColors.yellow,
@@ -115,7 +124,7 @@ class _ScanPageState extends State<ScanPage> {
                                 const BorderRadius.all(Radius.circular(40)),
                           ),
                           child: Image.asset(
-                            'assets/images/img.png',
+                            backgroundImage,
                             fit: BoxFit.contain,
                           ),
                         ),
@@ -129,9 +138,9 @@ class _ScanPageState extends State<ScanPage> {
                   padding: const EdgeInsets.only(top: 100.0),
                   child: Button(
                     title: CommonStrings.proceed.toUpperCase(),
-                    routePath: '/signature_page',
+                    onPressed: () =>
+                        Navigator.of(context).pushNamed('/signature_page'),
                   ),
-
                 ),
               const SizedBox(height: 100)
             ],
