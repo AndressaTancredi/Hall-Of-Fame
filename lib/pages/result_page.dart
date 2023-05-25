@@ -34,7 +34,7 @@ class _ResultPageState extends State<ResultPage> {
         body: SingleChildScrollView(
           child: Padding(
             padding:
-                const EdgeInsets.symmetric(vertical: 50.0, horizontal: 40.0),
+                const EdgeInsets.symmetric(vertical: 25.0, horizontal: 40.0),
             child: Column(
               children: [
                 Center(
@@ -60,10 +60,10 @@ class _ResultPageState extends State<ResultPage> {
                           Image.asset(
                             'assets/images/hallOfFame.jpg',
                             fit: BoxFit.contain,
-                            height: 1300,
+                            height: 1100,
                           ),
                           Positioned.fill(
-                            bottom: -650,
+                            bottom: -580,
                             left: 120,
                             child: Image.memory(
                               height: 1,
@@ -76,7 +76,7 @@ class _ResultPageState extends State<ResultPage> {
                     );
                   }),
                 ),
-                const SizedBox(height: 70.0),
+                const SizedBox(height: 50.0),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 130.0),
                   child: Button(
