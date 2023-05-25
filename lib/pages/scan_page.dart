@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:scanning_effect/scanning_effect.dart';
@@ -13,47 +12,45 @@ import '../widget/button.dart';
 class ScanPage extends StatefulWidget {
   const ScanPage({Key? key}) : super(key: key);
 
-  static const List<String> imageAssets = [
-    'assets/images/image1.jpg',
-    'assets/images/image2.jpg',
-    'assets/images/image3.jpg',
-  ];
-
   @override
   State<ScanPage> createState() => _ScanPageState();
 }
 
 class _ScanPageState extends State<ScanPage> {
-  bool showImage = false;
-  bool showEffect = true;
+  bool startCountdown = false;
+  bool showProceedButton = false;
   int countdown = 12;
+  Timer? _timer;
 
   TextStyle get titleStyle => sl<TextStyles>().titleDarkBold;
 
   @override
   void initState() {
     super.initState();
-    _startTimer();
   }
 
-  void _startTimer() {
+  void _startCountdownTimer() {
     const duration = Duration(seconds: 1);
-    Timer.periodic(duration, (timer) {
+    _timer = Timer.periodic(duration, (timer) {
       setState(() {
+        startCountdown = true;
         countdown--;
-        if (countdown <= 0) {
+        if (countdown == 0) {
           timer.cancel();
-          showImage = true;
-          showEffect = false;
+          showProceedButton = true;
         }
       });
     });
   }
 
   @override
+  void dispose() {
+    _timer?.cancel();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final int randomIndex = Random().nextInt(ScanPage.imageAssets.length);
-    final String backgroundImage = ScanPage.imageAssets[randomIndex];
     return SafeArea(
       child: Scaffold(
         backgroundColor: AppColors.primary,
@@ -73,21 +70,27 @@ class _ScanPageState extends State<ScanPage> {
                   ),
                 ),
               ),
-              Text(
-                '${CommonStrings.time} $countdown',
-                style: titleStyle.copyWith(
-                  fontSize: 40.0,
-                  color: AppColors.yellow,
+              if (startCountdown)
+                Text(
+                  '${CommonStrings.time} $countdown',
+                  style: titleStyle.copyWith(
+                    fontSize: 40.0,
+                    color: AppColors.yellow,
+                  ),
+                  textAlign: TextAlign.center,
                 ),
-                textAlign: TextAlign.center,
-              ),
               const SizedBox(height: 50),
               Expanded(
                 child: Stack(
                   alignment: Alignment.center,
                   children: [
-                    if (showEffect)
-                      ScanningEffect(
+                    GestureDetector(
+                      onTap: () {
+                        if (!startCountdown) {
+                          _startCountdownTimer();
+                        }
+                      },
+                      child: ScanningEffect(
                         scanningColor: AppColors.yellow,
                         borderLineColor: AppColors.primary,
                         delay: const Duration(seconds: 1),
@@ -109,31 +112,11 @@ class _ScanPageState extends State<ScanPage> {
                           ),
                         ),
                       ),
-                    if (showImage) ...[
-                      Opacity(
-                        opacity: 0.1,
-                        child: Container(
-                          height: 1600,
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                              color: AppColors.yellow,
-                              width: 10,
-                            ),
-                            color: AppColors.primary,
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(40)),
-                          ),
-                          child: Image.asset(
-                            backgroundImage,
-                            fit: BoxFit.contain,
-                          ),
-                        ),
-                      ),
-                    ],
+                    ),
                   ],
                 ),
               ),
-              if (showImage)
+              if (showProceedButton)
                 Padding(
                   padding: const EdgeInsets.only(top: 100.0),
                   child: Button(
