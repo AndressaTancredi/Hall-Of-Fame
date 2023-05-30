@@ -1,7 +1,12 @@
 class CommonStrings {
   static String get name => "Nome";
-  static String get yearsOld => "Idade";
-  static String get gender => "Gênero";
+  static String get nameRequired => 'O nome é obrigatório.';
+  static String get phoneNumber => "Telefone";
+  static String get phoneNumberRequired => "O telefone é obrigatório.";
+  static String get onlyNumber => 'Somente números.';
+  static String get email => 'E-mail';
+  static String get emailRequired => 'O e-mail é obrigatório.';
+  static String get validEmail => 'Insira um e-mail válido.';
   static String get voucher => "Voucher";
   static String get start => "Começar";
   static String get hallOfFame => "Calçada da Fama";
