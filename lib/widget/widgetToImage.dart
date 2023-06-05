@@ -4,9 +4,9 @@ class WidgetToImage extends StatefulWidget {
   final Function(GlobalKey key) builder;
 
   const WidgetToImage({
-    super.key,
+    Key? key,
     required this.builder,
-  });
+  }) : super(key: key);
 
   @override
   State<WidgetToImage> createState() => _WidgetToImageState();

@@ -16,7 +16,10 @@ dependencies:
   share: any
   path_provider: ^2.0.15
   provider: ^5.0.0
-  http: ^1.0.0
+  http: ^0.13.4
+  image_picker: ^0.8.4+4
+  http_parser: ^4.0.0
+  font_awesome_flutter: ^10.4.0
 
 dev_dependencies:
   flutter_test:

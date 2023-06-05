@@ -38,35 +38,12 @@ class _HomePageState extends State<_HomePageContent> {
   @override
   void initState() {
     super.initState();
-    final formData = Provider.of<FormDataModel>(context, listen: false);
-    _nameController.text = formData.name ?? '';
-    _phoneController.text = formData.phone?.toString() ?? '';
-    _emailController.text = formData.email ?? '';
   }
 
-  @override
-  void dispose() {
-    _nameController.dispose();
-    _phoneController.dispose();
-    _emailController.dispose();
-    super.dispose();
-  }
-
-  void _checkFormValidity() {
-    final formData = Provider.of<FormDataModel>(context, listen: false);
+  void _checkFormValidity() async {
     setState(() {
       _isFormValid = _formKey.currentState?.validate() ?? false;
     });
-    formData.updateName(_nameController.text);
-    formData.updatePhone(int.tryParse(_phoneController.text));
-    formData.updateEmail(_emailController.text);
-  }
-
-  void _saveFormData() {
-    final formData = Provider.of<FormDataModel>(context, listen: false);
-    formData.updateName(_nameController.text);
-    formData.updatePhone(int.tryParse(_phoneController.text));
-    formData.updateEmail(_emailController.text);
   }
 
   @override
@@ -159,12 +136,22 @@ class _HomePageState extends State<_HomePageContent> {
                   ),
                 ),
                 const SizedBox(height: 100.0),
-                Button(
-                    title: CommonStrings.start.toUpperCase(),
-                    onPressed: () {
-                      _isFormValid ? _saveFormData : null;
-                      Navigator.of(context).pushNamed('/scan_page');
-                    }),
+                Consumer<FormDataModel>(
+                  builder: (context, formDataModel, _) {
+                    return Button(
+                      title: CommonStrings.start.toUpperCase(),
+                      onPressed: _isFormValid
+                          ? () {
+                              formDataModel.updateName(_nameController.text);
+                              formDataModel.updatePhone(_phoneController.text);
+                              formDataModel.updateEmail(_emailController.text);
+                              Navigator.of(context)
+                                  .pushNamed('/signature_page');
+                            }
+                          : null,
+                    );
+                  },
+                ),
               ],
             ),
           ),

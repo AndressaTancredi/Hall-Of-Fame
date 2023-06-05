@@ -1,20 +1,20 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:share/share.dart';
+import 'package:provider/provider.dart';
 
 import '../common/app_colors.dart';
 import '../common/common_strings.dart';
+import '../common/data/request_api.dart';
 import '../common/injection_container.dart';
 import '../common/text_styles.dart';
 import '../common/utils.dart';
+import '../model/form_data.dart';
 import '../widget/button.dart';
 import '../widget/widgetToImage.dart';
 
 class ResultPage extends StatefulWidget {
   final Uint8List photo;
+
   const ResultPage({Key? key, required this.photo}) : super(key: key);
 
   @override
@@ -22,8 +22,9 @@ class ResultPage extends StatefulWidget {
 }
 
 class _ResultPageState extends State<ResultPage> {
-  late GlobalKey key1;
-  late Uint8List bytes1;
+  GlobalKey key1 = GlobalKey();
+  Uint8List? bytes1;
+
   TextStyle get titleStyle => sl<TextStyles>().titleYellow;
 
   @override
@@ -48,7 +49,9 @@ class _ResultPageState extends State<ResultPage> {
                 Container(
                   decoration: BoxDecoration(
                     border: Border.all(
-                        color: AppColors.yellow.withOpacity(0.5), width: 5),
+                      color: AppColors.yellow.withOpacity(0.5),
+                      width: 5,
+                    ),
                     borderRadius: const BorderRadius.all(Radius.circular(40)),
                   ),
                   child: WidgetToImage(builder: (key) {
@@ -66,7 +69,6 @@ class _ResultPageState extends State<ResultPage> {
                             bottom: -580,
                             left: 120,
                             child: Image.memory(
-                              height: 1,
                               widget.photo,
                               fit: BoxFit.contain,
                             ),
@@ -79,11 +81,15 @@ class _ResultPageState extends State<ResultPage> {
                 const SizedBox(height: 50.0),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 130.0),
-                  child: Button(
-                    title: CommonStrings.share.toUpperCase(),
-                    onPressed: () async {
-                      bytes1 = await Utils.capture(key1);
-                      await _shareMergedImages(bytes1);
+                  child: Consumer<FormDataModel>(
+                    builder: (context, formDataModel, _) {
+                      return Button(
+                        title: CommonStrings.share.toUpperCase(),
+                        onPressed: () {
+                          // shareQrCode();
+                          Navigator.of(context).pushNamed('/share_page');
+                        },
+                      );
                     },
                   ),
                 ),
@@ -95,12 +101,14 @@ class _ResultPageState extends State<ResultPage> {
     );
   }
 
-  Future<void> _shareMergedImages(Uint8List bytes) async {
-    final tempDir = await getTemporaryDirectory();
-    final tempFilePath = '${tempDir.path}/merged_image.jpg';
-    final tempFile = File(tempFilePath);
-    await tempFile.writeAsBytes(bytes1);
+  Future<void> shareQrCode() async {
+    bytes1 = await Utils.capture(key1);
+    FormDataModel().updateBytes(bytes1!);
+    final bytes = FormDataModel.bytes1;
+    final name = FormDataModel.name;
+    final phone = FormDataModel.phone;
+    final email = FormDataModel.email;
 
-    await Share.shareFiles([tempFilePath]);
+    await RequestAPI.getQrCode(name, phone, email, bytes);
   }
 }

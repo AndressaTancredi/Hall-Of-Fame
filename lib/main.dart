@@ -1,34 +1,43 @@
+import 'package:calcada_da_fama/model/form_data.dart';
 import 'package:calcada_da_fama/pages/home_page.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../common/injection_container.dart' as get_it;
 import 'common/app_router.dart';
 
-Future main() async {
-  await get_it.init();
+// class MyHttpOverrides extends HttpOverrides {
+//   @override
+//   HttpClient createHttpClient(SecurityContext? context) {
+//     return super.createHttpClient(context)
+//       ..badCertificateCallback =
+//           (X509Certificate cert, String host, int port) => true;
+//   }
+// }
+
+void main() {
+  get_it.init();
+  WidgetsFlutterBinding.ensureInitialized();
+  // HttpOverrides.global = MyHttpOverrides();
   runApp(const MyApp());
 }
 
-class MyApp extends StatefulWidget {
-  const MyApp({super.key});
-
-  @override
-  State<MyApp> createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
-  final AppRouter _appRouter = AppRouter();
+class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Calçada da Fama',
-      theme: ThemeData(
-        useMaterial3: true,
+    return Provider(
+      create: (context) => FormDataModel(),
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Calçada da Fama',
+        theme: ThemeData(
+          useMaterial3: true,
+        ),
+        home: const HomePage(),
+        onGenerateRoute: AppRouter().onGeneratedRoute,
       ),
-      home: const HomePage(),
-      onGenerateRoute: _appRouter.onGeneratedRoute,
     );
   }
 }
