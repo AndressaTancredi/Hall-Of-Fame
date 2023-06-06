@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -26,9 +28,17 @@ class _ResultPageState extends State<ResultPage> {
   Uint8List? bytes1;
 
   TextStyle get titleStyle => sl<TextStyles>().titleYellow;
+  TextStyle get bodyStyle => sl<TextStyles>().titleDarkBold;
+
+  List<String> imagePaths =
+      List.generate(12, (index) => 'assets/images/resultImage${index + 1}.png');
 
   @override
   Widget build(BuildContext context) {
+    Random random = Random();
+    int randomIndex = random.nextInt(imagePaths.length);
+    String randomImagePath = imagePaths[randomIndex];
+
     return SafeArea(
       child: Scaffold(
         backgroundColor: AppColors.primary,
@@ -61,16 +71,26 @@ class _ResultPageState extends State<ResultPage> {
                       child: Stack(
                         children: [
                           Image.asset(
-                            'assets/images/hallOfFame.jpg',
+                            randomImagePath,
                             fit: BoxFit.contain,
                             height: 1100,
                           ),
                           Positioned.fill(
-                            bottom: -580,
-                            left: 120,
-                            child: Image.memory(
-                              widget.photo,
-                              fit: BoxFit.contain,
+                            bottom: -480,
+                            child: Padding(
+                              padding: const EdgeInsets.all(150.0),
+                              child: Image.memory(
+                                widget.photo,
+                              ),
+                            ),
+                          ),
+                          Positioned.fill(
+                            top: 855,
+                            left: 412,
+                            child: Text(
+                              getDataTime(),
+                              style: bodyStyle.copyWith(
+                                  color: Colors.white, fontSize: 24),
                             ),
                           ),
                         ],
@@ -110,5 +130,11 @@ class _ResultPageState extends State<ResultPage> {
     final email = FormDataModel.email;
 
     await RequestAPI.getQrCode(name, phone, email, bytes);
+  }
+
+  String getDataTime() {
+    int timestamp = DateTime.now().millisecondsSinceEpoch;
+    DateTime tsDate = DateTime.fromMillisecondsSinceEpoch(timestamp);
+    return "${tsDate.day}/${tsDate.month}/${tsDate.year}";
   }
 }

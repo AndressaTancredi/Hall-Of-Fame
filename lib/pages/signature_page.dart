@@ -18,7 +18,7 @@ class SignaturePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final SignatureController controller = SignatureController(
       penStrokeWidth: 10,
-      penColor: Colors.grey,
+      penColor: Colors.white,
       exportBackgroundColor: Colors.transparent,
     );
 
@@ -76,7 +76,7 @@ class SignaturePage extends StatelessWidget {
   Future<Uint8List> _convertSignatureToImage(
       BuildContext context, SignatureController controller) async {
     final Uint8List? data =
-        await controller.toPngBytes(height: 800, width: 1400);
+        await controller.toPngBytes(height: 800, width: 1000);
     if (data != null) {
       return data;
     } else {
