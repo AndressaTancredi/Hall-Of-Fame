@@ -1,22 +1,50 @@
-import 'package:calcada_da_fama/widget/button.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../common/app_colors.dart';
 import '../common/common_strings.dart';
 import '../common/injection_container.dart';
 import '../common/text_styles.dart';
-import '../widget/dropdown_field_form.dart';
+import '../model/form_data.dart';
+import '../widget/button.dart';
 import '../widget/text_field_form.dart';
 
-class HomePage extends StatefulWidget {
+class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  Widget build(BuildContext context) {
+    return ChangeNotifierProvider(
+      create: (_) => FormDataModel(),
+      child: _HomePageContent(),
+    );
+  }
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageContent extends StatefulWidget {
+  @override
+  State<_HomePageContent> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<_HomePageContent> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _phoneController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  bool _isFormValid = false;
+
   TextStyle get titleStyle => sl<TextStyles>().titleYellow;
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  void _checkFormValidity() async {
+    setState(() {
+      _isFormValid = _formKey.currentState?.validate() ?? false;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +63,9 @@ class _HomePageState extends State<HomePage> {
                   child: Text(
                     CommonStrings.hallOfFame.toUpperCase(),
                     style: titleStyle.copyWith(
-                        fontSize: 60.0, color: AppColors.yellow),
+                      fontSize: 60.0,
+                      color: AppColors.yellow,
+                    ),
                   ),
                 ),
                 Container(
@@ -45,25 +75,81 @@ class _HomePageState extends State<HomePage> {
                     color: Colors.white,
                     borderRadius: BorderRadius.all(Radius.circular(40)),
                   ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      TextFieldForm(title: CommonStrings.name),
-                      const SizedBox(height: 74.0),
-                      TextFieldForm(title: CommonStrings.yearsOld),
-                      const SizedBox(height: 74.0),
-                      DropdownFieldForm(title: CommonStrings.gender),
-                      const SizedBox(height: 74.0),
-                      TextFieldForm(title: CommonStrings.voucher),
-                    ],
+                  child: Form(
+                    key: _formKey,
+                    onChanged: _checkFormValidity,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        TextFieldForm(
+                          title: CommonStrings.name,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return CommonStrings.nameRequired;
+                            }
+                            return null;
+                          },
+                          controller: _nameController,
+                          onChanged: (value) {
+                            _checkFormValidity();
+                          },
+                        ),
+                        const SizedBox(height: 150),
+                        TextFieldForm(
+                          title: CommonStrings.phoneNumber,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return CommonStrings.phoneNumberRequired;
+                            }
+                            if (int.tryParse(value) == null) {
+                              return CommonStrings.onlyNumber;
+                            }
+                            return null;
+                          },
+                          controller: _phoneController,
+                          onChanged: (value) {
+                            _checkFormValidity();
+                          },
+                        ),
+                        const SizedBox(height: 100),
+                        TextFieldForm(
+                          title: CommonStrings.email,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return CommonStrings.emailRequired;
+                            }
+                            final emailRegex =
+                                RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
+                            if (!emailRegex.hasMatch(value)) {
+                              return CommonStrings.validEmail;
+                            }
+                            return null;
+                          },
+                          controller: _emailController,
+                          onChanged: (value) {
+                            _checkFormValidity();
+                          },
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-                const SizedBox(height: 150.0),
-                Button(
-                  title: CommonStrings.start.toUpperCase(),
-                  onPressed: () =>
-                      Navigator.of(context).pushNamed('/scan_page'),
+                const SizedBox(height: 100.0),
+                Consumer<FormDataModel>(
+                  builder: (context, formDataModel, _) {
+                    return Button(
+                      title: CommonStrings.start.toUpperCase(),
+                      onPressed: _isFormValid
+                          ? () {
+                              formDataModel.updateName(_nameController.text);
+                              formDataModel.updatePhone(_phoneController.text);
+                              formDataModel.updateEmail(_emailController.text);
+                              Navigator.of(context).pushNamed('/scan_page');
+                            }
+                          : null,
+                    );
+                  },
                 ),
               ],
             ),

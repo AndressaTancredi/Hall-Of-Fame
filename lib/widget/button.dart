@@ -6,9 +6,12 @@ import '../common/text_styles.dart';
 
 class Button extends StatelessWidget {
   final String title;
-  final VoidCallback onPressed;
-  const Button({Key? key, required this.title, required this.onPressed})
-      : super(key: key);
+  final VoidCallback? onPressed;
+  const Button({
+    Key? key,
+    required this.title,
+    required this.onPressed,
+  }) : super(key: key);
 
   TextStyle get buttonStyle => sl<TextStyles>().buttonText;
 
@@ -28,6 +31,7 @@ class Button extends StatelessWidget {
         child: Text(
           title,
           style: buttonStyle,
+          textAlign: TextAlign.center,
         ),
       ),
     );
