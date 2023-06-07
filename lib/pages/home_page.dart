@@ -145,8 +145,7 @@ class _HomePageState extends State<_HomePageContent> {
                               formDataModel.updateName(_nameController.text);
                               formDataModel.updatePhone(_phoneController.text);
                               formDataModel.updateEmail(_emailController.text);
-                              Navigator.of(context)
-                                  .pushNamed('/signature_page');
+                              Navigator.of(context).pushNamed('/scan_page');
                             }
                           : null,
                     );

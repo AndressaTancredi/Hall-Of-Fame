@@ -1,12 +1,12 @@
 import 'dart:typed_data';
 
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class FormDataModel with ChangeNotifier {
   static String name = "";
   static String phone = "";
   static String email = "";
-  static Uint8List? bytes1;
+  static Uint8List? image;
   static String qrCode = "";
 
   void updateName(String value) {
@@ -24,8 +24,8 @@ class FormDataModel with ChangeNotifier {
     notifyListeners();
   }
 
-  void updateBytes(Uint8List value) {
-    bytes1 = value;
+  void updatePhoto(Uint8List? value) {
+    image = value;
     notifyListeners();
   }
 

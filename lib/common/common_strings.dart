@@ -24,6 +24,7 @@ class CommonStrings {
   static String get time => "Tempo restante: ";
   static String get errorImageToSignature =>
       'Failed to convert signature to image.';
+  static String get errorTryAgain => "Erro ao compartilhar \n Tente novamente";
   static String get shareOrientation =>
       "Aponte a câmera do seu celular para a imagem abaixo e compartilhe seu registro na Calçada da Fama nas redes sociais ";
 }

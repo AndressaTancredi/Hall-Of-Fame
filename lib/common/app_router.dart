@@ -47,9 +47,7 @@ class AppRouter {
         return MaterialPageRoute(
           builder: (_) => ChangeNotifierProvider<FormDataModel>(
             create: (_) => FormDataModel(),
-            child: const SharePage(
-              qrCodeImageLink: '',
-            ),
+            child: const SharePage(),
           ),
         );
       default:

@@ -1,8 +1,11 @@
+import 'dart:async';
+import 'dart:io';
 import 'dart:math';
+import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:provider/provider.dart';
+import 'package:image/image.dart' as img;
+import 'package:path_provider/path_provider.dart';
 
 import '../common/app_colors.dart';
 import '../common/common_strings.dart';
@@ -12,7 +15,7 @@ import '../common/text_styles.dart';
 import '../common/utils.dart';
 import '../model/form_data.dart';
 import '../widget/button.dart';
-import '../widget/widgetToImage.dart';
+import '../widget/widget_to_image.dart';
 
 class ResultPage extends StatefulWidget {
   final Uint8List photo;
@@ -26,12 +29,14 @@ class ResultPage extends StatefulWidget {
 class _ResultPageState extends State<ResultPage> {
   GlobalKey key1 = GlobalKey();
   Uint8List? bytes1;
+  bool isLoading = false;
+  bool isError = false;
 
   TextStyle get titleStyle => sl<TextStyles>().titleYellow;
   TextStyle get bodyStyle => sl<TextStyles>().titleDarkBold;
 
   List<String> imagePaths =
-      List.generate(12, (index) => 'assets/images/resultImage${index + 1}.png');
+      List.generate(12, (index) => 'assets/images/resultImage${index + 1}.jpg');
 
   @override
   Widget build(BuildContext context) {
@@ -101,17 +106,37 @@ class _ResultPageState extends State<ResultPage> {
                 const SizedBox(height: 50.0),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 130.0),
-                  child: Consumer<FormDataModel>(
-                    builder: (context, formDataModel, _) {
-                      return Button(
-                        title: CommonStrings.share.toUpperCase(),
-                        onPressed: () {
-                          // shareQrCode();
-                          Navigator.of(context).pushNamed('/share_page');
-                        },
-                      );
-                    },
-                  ),
+                  child: isLoading
+                      ? const CircularProgressIndicator(
+                          valueColor:
+                              AlwaysStoppedAnimation<Color>(AppColors.yellow),
+                        )
+                      : isError
+                          ? Button(
+                              title: CommonStrings.errorTryAgain.toUpperCase(),
+                              onPressed: () {
+                                Navigator.of(context).pushNamed('/home_page');
+                              },
+                            )
+                          : Button(
+                              title: CommonStrings.share.toUpperCase(),
+                              onPressed: () async {
+                                setState(() {
+                                  isLoading = true;
+                                });
+
+                                try {
+                                  await shareQrCode();
+                                  Navigator.of(context)
+                                      .pushNamed('/share_page');
+                                } catch (error) {
+                                  setState(() {
+                                    isError = true;
+                                    isLoading = false;
+                                  });
+                                }
+                              },
+                            ),
                 ),
               ],
             ),
@@ -122,14 +147,24 @@ class _ResultPageState extends State<ResultPage> {
   }
 
   Future<void> shareQrCode() async {
-    bytes1 = await Utils.capture(key1);
-    FormDataModel().updateBytes(bytes1!);
-    final bytes = FormDataModel.bytes1;
+    final capturedImage = await Utils.capture(key1);
+
+    final tempDir = await getTemporaryDirectory();
+    final imagePath = '${tempDir.path}/result_image.jpg';
+
+    if (capturedImage != null) {
+      final img.Image image = img.decodeImage(capturedImage)!;
+      final jpegBytes = img.encodeJpg(image, quality: 80);
+      await File(imagePath).writeAsBytes(jpegBytes);
+    } else {
+      throw Exception('Failed to decode image');
+    }
+
+    FormDataModel().updatePhoto(widget.photo);
     final name = FormDataModel.name;
     final phone = FormDataModel.phone;
     final email = FormDataModel.email;
-
-    await RequestAPI.getQrCode(name, phone, email, bytes);
+    await RequestAPI.getQrCode(name, phone, email, imagePath);
   }
 
   String getDataTime() {

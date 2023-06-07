@@ -5,11 +5,11 @@ import '../common/app_colors.dart';
 import '../common/common_strings.dart';
 import '../common/injection_container.dart';
 import '../common/text_styles.dart';
+import '../model/form_data.dart';
 import '../widget/button.dart';
 
 class SharePage extends StatelessWidget {
-  final String qrCodeImageLink;
-  const SharePage({Key? key, required this.qrCodeImageLink}) : super(key: key);
+  const SharePage({Key? key}) : super(key: key);
   TextStyle get titleStyle => sl<TextStyles>().titleYellow;
 
   @override
@@ -34,7 +34,7 @@ class SharePage extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 150.0),
                   child: Image.network(
-                    "https://www.tcheofertas.com.br/tcheofertas/upload/api_uploads/647e6ec5390b8_qr_code.png",
+                    FormDataModel.qrCode,
                     fit: BoxFit.contain,
                     height: 600,
                   ),
