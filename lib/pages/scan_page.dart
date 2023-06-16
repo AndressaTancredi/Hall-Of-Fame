@@ -19,7 +19,7 @@ class ScanPage extends StatefulWidget {
 class _ScanPageState extends State<ScanPage> {
   bool startCountdown = false;
   bool showProceedButton = false;
-  int countdown = 12;
+  int countdown = 6;
   Timer? _timer;
 
   TextStyle get titleStyle => sl<TextStyles>().titleDarkBold;
