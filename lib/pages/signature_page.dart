@@ -18,7 +18,7 @@ class SignaturePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final SignatureController controller = SignatureController(
       penStrokeWidth: 10,
-      penColor: Colors.white,
+      penColor: AppColors.signature,
       exportBackgroundColor: Colors.transparent,
     );
 
