@@ -83,7 +83,7 @@ class _ResultPageState extends State<ResultPage> {
                           Positioned.fill(
                             bottom: -480,
                             child: Padding(
-                              padding: const EdgeInsets.all(150.0),
+                              padding: const EdgeInsets.all(220.0),
                               child: Image.memory(
                                 widget.photo,
                               ),

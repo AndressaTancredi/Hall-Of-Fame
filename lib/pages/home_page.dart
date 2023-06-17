@@ -99,11 +99,12 @@ class _HomePageState extends State<_HomePageContent> {
                         TextFieldForm(
                           title: CommonStrings.phoneNumber,
                           validator: (value) {
+                            String phonePattern = r'(^(?:[+0]9)?[0-9]{10,12}$)';
+                            RegExp regExp = RegExp(phonePattern);
                             if (value == null || value.isEmpty) {
                               return CommonStrings.phoneNumberRequired;
-                            }
-                            if (int.tryParse(value) == null) {
-                              return CommonStrings.onlyNumber;
+                            } else if (!regExp.hasMatch(value)) {
+                              return 'Por favor entre com um número de telefone válido!';
                             }
                             return null;
                           },
