@@ -36,7 +36,7 @@ class _ResultPageState extends State<ResultPage> {
   TextStyle get bodyStyle => sl<TextStyles>().titleDarkBold;
 
   List<String> imagePaths =
-      List.generate(12, (index) => 'assets/images/resultImage${index + 1}.jpg');
+      List.generate(12, (index) => 'assets/images/${index + 1}.png');
 
   @override
   Widget build(BuildContext context) {

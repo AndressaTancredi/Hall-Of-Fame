@@ -23,7 +23,7 @@ class RequestAPI {
 
       var request = http.MultipartRequest('POST', url);
       request.headers.addAll(headers);
-      request.fields.addAll({'name': name, 'phone': phone, 'email': email});
+      request.fields.addAll({'nome': name, 'telefone': phone, 'email': email});
 
       var multipartFile = await http.MultipartFile.fromPath(
         'image',
