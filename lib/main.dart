@@ -6,19 +6,9 @@ import 'package:provider/provider.dart';
 import '../common/injection_container.dart' as get_it;
 import 'common/app_router.dart';
 
-// class MyHttpOverrides extends HttpOverrides {
-//   @override
-//   HttpClient createHttpClient(SecurityContext? context) {
-//     return super.createHttpClient(context)
-//       ..badCertificateCallback =
-//           (X509Certificate cert, String host, int port) => true;
-//   }
-// }
-
 void main() {
   get_it.init();
   WidgetsFlutterBinding.ensureInitialized();
-  // HttpOverrides.global = MyHttpOverrides();
   runApp(const MyApp());
 }
 

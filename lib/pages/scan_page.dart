@@ -27,6 +27,7 @@ class _ScanPageState extends State<ScanPage> {
   @override
   void initState() {
     super.initState();
+    _startCountdownTimer();
   }
 
   void _startCountdownTimer() {
