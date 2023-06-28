@@ -9,6 +9,7 @@ class TextFieldForm extends StatefulWidget {
   final String? Function(String?)? validator;
   final TextEditingController controller;
   final ValueChanged<String>? onChanged;
+  final maskFormatter;
 
   const TextFieldForm({
     Key? key,
@@ -16,6 +17,7 @@ class TextFieldForm extends StatefulWidget {
     this.validator,
     required this.controller,
     this.onChanged,
+    this.maskFormatter,
   }) : super(key: key);
 
   TextStyle get titleStyle =>
@@ -40,6 +42,7 @@ class _TextFieldFormState extends State<TextFieldForm> {
             style: widget.titleStyle,
           ),
           TextFormField(
+            inputFormatters: widget.maskFormatter,
             controller: widget.controller,
             cursorColor: AppColors.yellow,
             style: const TextStyle(

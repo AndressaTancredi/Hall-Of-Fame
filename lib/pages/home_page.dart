@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:provider/provider.dart';
 
 import '../common/app_colors.dart';
@@ -100,16 +101,12 @@ class _HomePageState extends State<_HomePageContent> {
                         ),
                         const SizedBox(height: 150),
                         TextFieldForm(
+                          maskFormatter: [maskFormatter],
                           title: CommonStrings.phoneNumber,
                           validator: (value) {
-                            String phonePattern = r'(^(?:[+0]9)?[0-9]{10,12}$)';
-                            RegExp regExp = RegExp(phonePattern);
                             if (value == null || value.isEmpty) {
                               return CommonStrings.phoneNumberRequired;
-                            } else if (!regExp.hasMatch(value)) {
-                              return 'Por favor entre com um número de telefone válido!';
                             }
-                            return null;
                           },
                           controller: _phoneController,
                           onChanged: (value) {
@@ -174,4 +171,9 @@ class _HomePageState extends State<_HomePageContent> {
     }
     return result;
   }
+
+  var maskFormatter = MaskTextInputFormatter(
+      mask: '(##) #####-####',
+      filter: {"#": RegExp(r'[0-9]')},
+      type: MaskAutoCompletionType.lazy);
 }
