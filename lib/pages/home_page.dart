@@ -92,6 +92,9 @@ class _HomePageState extends State<_HomePageContent> {
                           },
                           controller: _nameController,
                           onChanged: (value) {
+                            _nameController.value = TextEditingValue(
+                                text: capitalizeAllWord(value),
+                                selection: _nameController.selection);
                             _checkFormValidity();
                           },
                         ),
@@ -158,5 +161,17 @@ class _HomePageState extends State<_HomePageContent> {
         ),
       ),
     );
+  }
+
+  String capitalizeAllWord(String value) {
+    var result = value[0].toUpperCase();
+    for (int i = 1; i < value.length; i++) {
+      if (value[i - 1] == " ") {
+        result = result + value[i].toUpperCase();
+      } else {
+        result = result + value[i];
+      }
+    }
+    return result;
   }
 }
