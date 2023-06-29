@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:calcada_da_fama/pages/home_page.dart';
+import 'package:calcada_da_fama/pages/register_page.dart';
 import 'package:calcada_da_fama/pages/result_page.dart';
 import 'package:calcada_da_fama/pages/scan_page.dart';
 import 'package:flutter/material.dart';
@@ -26,6 +27,13 @@ class AppRouter {
           builder: (_) => ChangeNotifierProvider<FormDataModel>(
             create: (_) => FormDataModel(),
             child: const HomePage(),
+          ),
+        );
+      case '/register_page':
+        return MaterialPageRoute(
+          builder: (_) => ChangeNotifierProvider<FormDataModel>(
+            create: (_) => FormDataModel(),
+            child: const RegisterPage(),
           ),
         );
       case '/scan_page':

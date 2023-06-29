@@ -131,6 +131,7 @@ class _ResultPageState extends State<ResultPage> {
                                       .pushNamed('/share_page');
                                 } catch (error) {
                                   setState(() {
+                                    print(error);
                                     isError = true;
                                     isLoading = false;
                                   });

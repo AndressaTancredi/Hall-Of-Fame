@@ -47,4 +47,30 @@ class RequestAPI {
       throw Exception('Dados inválidos');
     }
   }
+
+  static Future<void> checkCPF(String cpf) async {
+    if (cpf.isNotEmpty) {
+      final url = Uri.parse(
+          'https://www.tcheofertas.com.br/nova_home/getUserbyCpf/$cpf');
+
+      var headers = {
+        'Authorization': 'Bearer $token',
+      };
+
+      var request = http.MultipartRequest('GET', url);
+      request.headers.addAll(headers);
+      request.fields.addAll({'cpf': cpf});
+
+      var response = await request.send();
+      var responseString = await response.stream.bytesToString();
+
+      if (response.statusCode == 200) {
+        FormDataModel().updateCPF(cpf);
+      } else {
+        throw Exception('Erro ao buscar dados do cpf');
+      }
+    } else {
+      throw Exception('Dados inválidos');
+    }
+  }
 }

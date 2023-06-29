@@ -29,12 +29,11 @@ class _HomePageContent extends StatefulWidget {
 
 class _HomePageState extends State<_HomePageContent> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _phoneController = TextEditingController();
-  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _cpfController = TextEditingController();
   bool _isFormValid = false;
 
   TextStyle get titleStyle => sl<TextStyles>().titleYellow;
+  TextStyle get subtitleStyle => sl<TextStyles>().titleDarkBold;
 
   @override
   void initState() {
@@ -70,7 +69,7 @@ class _HomePageState extends State<_HomePageContent> {
                   ),
                 ),
                 Container(
-                  height: 900,
+                  height: 400,
                   padding: const EdgeInsets.all(50.0),
                   decoration: const BoxDecoration(
                     color: Colors.white,
@@ -80,54 +79,13 @@ class _HomePageState extends State<_HomePageContent> {
                     key: _formKey,
                     onChanged: _checkFormValidity,
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         TextFieldForm(
-                          title: CommonStrings.name,
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return CommonStrings.nameRequired;
-                            }
-                            return null;
-                          },
-                          controller: _nameController,
-                          onChanged: (value) {
-                            _nameController.value = TextEditingValue(
-                                text: capitalizeAllWord(value),
-                                selection: _nameController.selection);
-                            _checkFormValidity();
-                          },
-                        ),
-                        const SizedBox(height: 150),
-                        TextFieldForm(
-                          maskFormatter: [maskFormatter],
-                          title: CommonStrings.phoneNumber,
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return CommonStrings.phoneNumberRequired;
-                            }
-                          },
-                          controller: _phoneController,
-                          onChanged: (value) {
-                            _checkFormValidity();
-                          },
-                        ),
-                        const SizedBox(height: 100),
-                        TextFieldForm(
-                          title: CommonStrings.email,
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return CommonStrings.emailRequired;
-                            }
-                            final emailRegex =
-                                RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
-                            if (!emailRegex.hasMatch(value)) {
-                              return CommonStrings.validEmail;
-                            }
-                            return null;
-                          },
-                          controller: _emailController,
+                          maskFormatter: [maskCPFFormatter],
+                          title: "Insira seu CPF:",
+                          controller: _cpfController,
                           onChanged: (value) {
                             _checkFormValidity();
                           },
@@ -136,16 +94,22 @@ class _HomePageState extends State<_HomePageContent> {
                     ),
                   ),
                 ),
-                const SizedBox(height: 100.0),
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 50.0, vertical: 150),
+                  child: Text(
+                    "Lembre-se de realizar seu cadastro no piso inferior",
+                    style: subtitleStyle.copyWith(
+                        fontSize: 40, color: Colors.white),
+                  ),
+                ),
                 Consumer<FormDataModel>(
                   builder: (context, formDataModel, _) {
                     return Button(
                       title: CommonStrings.start.toUpperCase(),
                       onPressed: _isFormValid
                           ? () {
-                              formDataModel.updateName(_nameController.text);
-                              formDataModel.updatePhone(_phoneController.text);
-                              formDataModel.updateEmail(_emailController.text);
+                              formDataModel.updateCPF(_cpfController.text);
                               Navigator.of(context).pushNamed('/scan_page');
                             }
                           : null,
@@ -160,20 +124,8 @@ class _HomePageState extends State<_HomePageContent> {
     );
   }
 
-  String capitalizeAllWord(String value) {
-    var result = value[0].toUpperCase();
-    for (int i = 1; i < value.length; i++) {
-      if (value[i - 1] == " ") {
-        result = result + value[i].toUpperCase();
-      } else {
-        result = result + value[i];
-      }
-    }
-    return result;
-  }
-
-  var maskFormatter = MaskTextInputFormatter(
-      mask: '(##) #####-####',
+  var maskCPFFormatter = MaskTextInputFormatter(
+      mask: '###.###.###-##',
       filter: {"#": RegExp(r'[0-9]')},
       type: MaskAutoCompletionType.lazy);
 }
