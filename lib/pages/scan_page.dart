@@ -7,6 +7,7 @@ import '../common/app_colors.dart';
 import '../common/common_strings.dart';
 import '../common/injection_container.dart';
 import '../common/text_styles.dart';
+import '../model/form_data.dart';
 import '../widget/button.dart';
 
 class ScanPage extends StatefulWidget {
@@ -63,7 +64,7 @@ class _ScanPageState extends State<ScanPage> {
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 50.0),
                 child: Text(
-                  CommonStrings.scanOrientation,
+                  'Olá ${FormDataModel.name}! \n ${CommonStrings.scanOrientation}',
                   textAlign: TextAlign.center,
                   style: titleStyle.copyWith(
                     fontSize: 40.0,

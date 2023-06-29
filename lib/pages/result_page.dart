@@ -165,7 +165,8 @@ class _ResultPageState extends State<ResultPage> {
     final name = FormDataModel.name;
     final phone = FormDataModel.phone;
     final email = FormDataModel.email;
-    await RequestAPI.getQrCode(name, phone, email, imagePath);
+    final cpf = FormDataModel.cpf;
+    await RequestAPI.getQrCode(name, phone, email, cpf, imagePath);
   }
 
   String getDataTime() {

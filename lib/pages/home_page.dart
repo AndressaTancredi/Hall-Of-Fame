@@ -1,3 +1,4 @@
+import 'package:calcada_da_fama/common/data/request_api.dart';
 import 'package:flutter/material.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:provider/provider.dart';
@@ -31,6 +32,7 @@ class _HomePageState extends State<_HomePageContent> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _cpfController = TextEditingController();
   bool _isFormValid = false;
+  bool _isRegistered = true;
 
   TextStyle get titleStyle => sl<TextStyles>().titleYellow;
   TextStyle get subtitleStyle => sl<TextStyles>().titleDarkBold;
@@ -87,6 +89,10 @@ class _HomePageState extends State<_HomePageContent> {
                           title: "Insira seu CPF:",
                           controller: _cpfController,
                           onChanged: (value) {
+                            var cpfFormatted1 = value.replaceAll("-", "");
+                            var cpfFormatted2 =
+                                cpfFormatted1.replaceAll(".", "");
+                            FormDataModel().updateCPF(cpfFormatted2);
                             _checkFormValidity();
                           },
                         ),
@@ -94,28 +100,53 @@ class _HomePageState extends State<_HomePageContent> {
                     ),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 50.0, vertical: 150),
-                  child: Text(
-                    "Lembre-se de realizar seu cadastro no piso inferior",
-                    style: subtitleStyle.copyWith(
-                        fontSize: 40, color: Colors.white),
+                if (_isRegistered == false)
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 50.0, vertical: 150),
+                    child: Text(
+                      "Você deve fazer o pré-cadastro no hall de entrada do Palácio dos Festivais",
+                      style: subtitleStyle.copyWith(
+                          fontSize: 40, color: Colors.white),
+                    ),
                   ),
-                ),
-                Consumer<FormDataModel>(
-                  builder: (context, formDataModel, _) {
-                    return Button(
-                      title: CommonStrings.start.toUpperCase(),
-                      onPressed: _isFormValid
-                          ? () {
-                              formDataModel.updateCPF(_cpfController.text);
-                              Navigator.of(context).pushNamed('/scan_page');
-                            }
-                          : null,
-                    );
-                  },
-                ),
+                if (_isRegistered == true)
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 50.0, vertical: 150),
+                    child: Text(
+                      "Lembre-se de realizar seu cadastro no piso inferior",
+                      style: subtitleStyle.copyWith(
+                          fontSize: 40, color: Colors.white),
+                    ),
+                  ),
+                if (_isRegistered == false)
+                  Button(
+                    title: "RECOMEÇAR",
+                    onPressed: () =>
+                        Navigator.of(context).pushNamed('/start_page'),
+                  ),
+                if (_isRegistered == true)
+                  Consumer<FormDataModel>(
+                    builder: (context, formDataModel, _) {
+                      return Button(
+                        title: CommonStrings.start.toUpperCase(),
+                        onPressed: _isFormValid
+                            ? () async {
+                                var request = await RequestAPI.hasRegister(
+                                    FormDataModel.cpf);
+                                if (request == true) {
+                                  Navigator.of(context).pushNamed('/scan_page');
+                                } else {
+                                  setState(() {
+                                    _isRegistered = false;
+                                  });
+                                }
+                              }
+                            : null,
+                      );
+                    },
+                  ),
               ],
             ),
           ),

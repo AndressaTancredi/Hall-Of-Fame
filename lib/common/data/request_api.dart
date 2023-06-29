@@ -8,11 +8,12 @@ import '../../model/form_data.dart';
 class RequestAPI {
   static const String token = 'YXBwYW5kcm9pZDoyMDIzMDUyNQ==';
 
-  static Future<void> getQrCode(
-      String name, String phone, String email, String photoPath) async {
+  static Future<void> getQrCode(String name, String phone, String email,
+      String cpf, String photoPath) async {
     if (name.isNotEmpty &&
         phone.isNotEmpty &&
         email.isNotEmpty &&
+        cpf.isNotEmpty &&
         photoPath.isNotEmpty) {
       final url =
           Uri.parse('https://www.tcheofertas.com.br/nova_home/image_upload');
@@ -23,7 +24,8 @@ class RequestAPI {
 
       var request = http.MultipartRequest('POST', url);
       request.headers.addAll(headers);
-      request.fields.addAll({'nome': name, 'telefone': phone, 'email': email});
+      request.fields.addAll(
+          {'nome': name, 'telefone': phone, 'email': email, 'cpf': cpf});
 
       var multipartFile = await http.MultipartFile.fromPath(
         'image',
@@ -48,26 +50,30 @@ class RequestAPI {
     }
   }
 
-  static Future<void> checkCPF(String cpf) async {
+  static Future<bool> hasRegister(String cpf) async {
     if (cpf.isNotEmpty) {
       final url = Uri.parse(
           'https://www.tcheofertas.com.br/nova_home/getUserbyCpf/$cpf');
 
-      var headers = {
+      final response = await http.get(url, headers: {
         'Authorization': 'Bearer $token',
-      };
+      });
 
-      var request = http.MultipartRequest('GET', url);
-      request.headers.addAll(headers);
-      request.fields.addAll({'cpf': cpf});
+      final responseBody = jsonDecode(response.body) as Map<String, dynamic>;
 
-      var response = await request.send();
-      var responseString = await response.stream.bytesToString();
+      if (responseBody.toString().contains('nome')) {
+        var name = responseBody['nome'];
+        var cpf = responseBody['cpf'];
+        var email = responseBody['email'];
+        var phone = responseBody['telefone'];
 
-      if (response.statusCode == 200) {
-        FormDataModel().updateCPF(cpf);
+        FormDataModel().updateName(name!);
+        FormDataModel().updateCPF(cpf!);
+        FormDataModel().updateEmail(email!);
+        FormDataModel().updatePhone(phone!);
+        return true;
       } else {
-        throw Exception('Erro ao buscar dados do cpf');
+        return false;
       }
     } else {
       throw Exception('Dados inválidos');
