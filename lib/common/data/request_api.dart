@@ -59,8 +59,7 @@ class RequestAPI {
         'Authorization': 'Bearer $token',
       });
 
-      // ESSA CONDICAO NAO FUNCIONA
-      if (response.body.isEmpty) {
+      if (response.statusCode == 400) {
         return false;
       } else {
         final responseBody = jsonDecode(response.body) as Map<String, dynamic>;
