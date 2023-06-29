@@ -41,3 +41,8 @@ flutter:
           weight: 700
         - asset: assets/fonts/TTTravels-Regular.otf
           weight: 400
+
+    - family: Photo-Signature
+      fonts:
+        - asset: assets/fonts/Photo-Signature.ttf
+          weight: 700
