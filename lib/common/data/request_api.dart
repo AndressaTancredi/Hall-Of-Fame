@@ -59,9 +59,12 @@ class RequestAPI {
         'Authorization': 'Bearer $token',
       });
 
-      final responseBody = jsonDecode(response.body) as Map<String, dynamic>;
+      // ESSA CONDICAO NAO FUNCIONA
+      if (response.body.isEmpty) {
+        return false;
+      } else {
+        final responseBody = jsonDecode(response.body) as Map<String, dynamic>;
 
-      if (responseBody.toString().contains('nome')) {
         var name = responseBody['nome'];
         var cpf = responseBody['cpf'];
         var email = responseBody['email'];
@@ -72,11 +75,9 @@ class RequestAPI {
         FormDataModel().updateEmail(email!);
         FormDataModel().updatePhone(phone!);
         return true;
-      } else {
-        return false;
       }
     } else {
-      throw Exception('Dados inválidos');
+      return false;
     }
   }
 }
