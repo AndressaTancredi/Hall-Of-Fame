@@ -11,6 +11,7 @@ import '../widget/button.dart';
 class SharePage extends StatelessWidget {
   const SharePage({Key? key}) : super(key: key);
   TextStyle get titleStyle => sl<TextStyles>().titleYellow;
+  TextStyle get subTitleStyle => sl<TextStyles>().titleDarkBold;
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +21,7 @@ class SharePage extends StatelessWidget {
         body: SingleChildScrollView(
           child: Padding(
             padding:
-                const EdgeInsets.symmetric(vertical: 100.0, horizontal: 120.0),
+                const EdgeInsets.symmetric(vertical: 50.0, horizontal: 120.0),
             child: Column(
               children: [
                 Center(
@@ -30,7 +31,7 @@ class SharePage extends StatelessWidget {
                     textAlign: TextAlign.justify,
                   ),
                 ),
-                const SizedBox(height: 150),
+                const SizedBox(height: 50),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 150.0),
                   child: Image.network(
@@ -39,9 +40,19 @@ class SharePage extends StatelessWidget {
                     height: 600,
                   ),
                 ),
+                const SizedBox(height: 50),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 50.0),
+                  child: Text(
+                    "Compartilhe nas redes sociais com seu celular",
+                    style: subTitleStyle.copyWith(
+                        color: Colors.white, fontSize: 44),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
                 const Padding(
                   padding:
-                      EdgeInsets.symmetric(horizontal: 150.0, vertical: 150),
+                      EdgeInsets.symmetric(horizontal: 150.0, vertical: 50),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -63,6 +74,7 @@ class SharePage extends StatelessWidget {
                     ],
                   ),
                 ),
+                const SizedBox(height: 50),
                 Button(
                   title: CommonStrings.restart.toUpperCase(),
                   onPressed: () =>
