@@ -9,10 +9,18 @@ import 'package:provider/provider.dart';
 import '../model/form_data.dart';
 import '../pages/share_page.dart';
 import '../pages/signature_page.dart';
+import '../pages/start_page.dart';
 
 class AppRouter {
   Route onGeneratedRoute(RouteSettings routeSettings) {
     switch (routeSettings.name) {
+      case '/start_page':
+        return MaterialPageRoute(
+          builder: (_) => ChangeNotifierProvider<FormDataModel>(
+            create: (_) => FormDataModel(),
+            child: const StartPage(),
+          ),
+        );
       case '/home_page':
         return MaterialPageRoute(
           builder: (_) => ChangeNotifierProvider<FormDataModel>(
