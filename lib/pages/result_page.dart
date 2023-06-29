@@ -34,6 +34,7 @@ class _ResultPageState extends State<ResultPage> {
 
   TextStyle get titleStyle => sl<TextStyles>().titleYellow;
   TextStyle get bodyStyle => sl<TextStyles>().titleDarkBold;
+  TextStyle get dateStyle => sl<TextStyles>().signatureDate;
 
   List<String> imagePaths =
       List.generate(12, (index) => 'assets/images/${index + 1}.png');
@@ -83,19 +84,18 @@ class _ResultPageState extends State<ResultPage> {
                           Positioned.fill(
                             bottom: -480,
                             child: Padding(
-                              padding: const EdgeInsets.all(220.0),
+                              padding: const EdgeInsets.all(194.0),
                               child: Image.memory(
                                 widget.photo,
                               ),
                             ),
                           ),
                           Positioned.fill(
-                            top: 855,
+                            top: 845,
                             left: 412,
                             child: Text(
                               getDataTime(),
-                              style: bodyStyle.copyWith(
-                                  color: Colors.white, fontSize: 24),
+                              style: dateStyle,
                             ),
                           ),
                         ],
@@ -131,6 +131,7 @@ class _ResultPageState extends State<ResultPage> {
                                       .pushNamed('/share_page');
                                 } catch (error) {
                                   setState(() {
+                                    print(error);
                                     isError = true;
                                     isLoading = false;
                                   });
@@ -164,7 +165,8 @@ class _ResultPageState extends State<ResultPage> {
     final name = FormDataModel.name;
     final phone = FormDataModel.phone;
     final email = FormDataModel.email;
-    await RequestAPI.getQrCode(name, phone, email, imagePath);
+    final cpf = FormDataModel.cpf;
+    await RequestAPI.getQrCode(name, phone, email, cpf, imagePath);
   }
 
   String getDataTime() {

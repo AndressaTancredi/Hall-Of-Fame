@@ -1,4 +1,6 @@
+import 'package:calcada_da_fama/common/data/request_api.dart';
 import 'package:flutter/material.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:provider/provider.dart';
 
 import '../common/app_colors.dart';
@@ -28,12 +30,12 @@ class _HomePageContent extends StatefulWidget {
 
 class _HomePageState extends State<_HomePageContent> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _phoneController = TextEditingController();
-  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _cpfController = TextEditingController();
   bool _isFormValid = false;
+  bool _isRegistered = true;
 
   TextStyle get titleStyle => sl<TextStyles>().titleYellow;
+  TextStyle get subtitleStyle => sl<TextStyles>().titleDarkBold;
 
   @override
   void initState() {
@@ -69,7 +71,7 @@ class _HomePageState extends State<_HomePageContent> {
                   ),
                 ),
                 Container(
-                  height: 900,
+                  height: 400,
                   padding: const EdgeInsets.all(50.0),
                   decoration: const BoxDecoration(
                     color: Colors.white,
@@ -79,56 +81,18 @@ class _HomePageState extends State<_HomePageContent> {
                     key: _formKey,
                     onChanged: _checkFormValidity,
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         TextFieldForm(
-                          title: CommonStrings.name,
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return CommonStrings.nameRequired;
-                            }
-                            return null;
-                          },
-                          controller: _nameController,
+                          maskFormatter: [maskCPFFormatter],
+                          title: "Insira seu CPF:",
+                          controller: _cpfController,
                           onChanged: (value) {
-                            _checkFormValidity();
-                          },
-                        ),
-                        const SizedBox(height: 150),
-                        TextFieldForm(
-                          title: CommonStrings.phoneNumber,
-                          validator: (value) {
-                            String phonePattern = r'(^(?:[+0]9)?[0-9]{10,12}$)';
-                            RegExp regExp = RegExp(phonePattern);
-                            if (value == null || value.isEmpty) {
-                              return CommonStrings.phoneNumberRequired;
-                            } else if (!regExp.hasMatch(value)) {
-                              return 'Por favor entre com um número de telefone válido!';
-                            }
-                            return null;
-                          },
-                          controller: _phoneController,
-                          onChanged: (value) {
-                            _checkFormValidity();
-                          },
-                        ),
-                        const SizedBox(height: 100),
-                        TextFieldForm(
-                          title: CommonStrings.email,
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return CommonStrings.emailRequired;
-                            }
-                            final emailRegex =
-                                RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
-                            if (!emailRegex.hasMatch(value)) {
-                              return CommonStrings.validEmail;
-                            }
-                            return null;
-                          },
-                          controller: _emailController,
-                          onChanged: (value) {
+                            var cpfFormatted1 = value.replaceAll("-", "");
+                            var cpfFormatted2 =
+                                cpfFormatted1.replaceAll(".", "");
+                            FormDataModel().updateCPF(cpfFormatted2);
                             _checkFormValidity();
                           },
                         ),
@@ -136,22 +100,53 @@ class _HomePageState extends State<_HomePageContent> {
                     ),
                   ),
                 ),
-                const SizedBox(height: 100.0),
-                Consumer<FormDataModel>(
-                  builder: (context, formDataModel, _) {
-                    return Button(
-                      title: CommonStrings.start.toUpperCase(),
-                      onPressed: _isFormValid
-                          ? () {
-                              formDataModel.updateName(_nameController.text);
-                              formDataModel.updatePhone(_phoneController.text);
-                              formDataModel.updateEmail(_emailController.text);
-                              Navigator.of(context).pushNamed('/scan_page');
-                            }
-                          : null,
-                    );
-                  },
-                ),
+                if (_isRegistered == false)
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 50.0, vertical: 150),
+                    child: Text(
+                      "Você deve fazer o pré-cadastro no hall de entrada do Palácio dos Festivais",
+                      style: subtitleStyle.copyWith(
+                          fontSize: 40, color: Colors.white),
+                    ),
+                  ),
+                if (_isRegistered == true)
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 50.0, vertical: 150),
+                    child: Text(
+                      "Lembre-se de realizar seu cadastro no piso inferior",
+                      style: subtitleStyle.copyWith(
+                          fontSize: 40, color: Colors.white),
+                    ),
+                  ),
+                if (_isRegistered == false)
+                  Button(
+                    title: "RECOMEÇAR",
+                    onPressed: () =>
+                        Navigator.of(context).pushNamed('/start_page'),
+                  ),
+                if (_isRegistered == true)
+                  Consumer<FormDataModel>(
+                    builder: (context, formDataModel, _) {
+                      return Button(
+                        title: CommonStrings.start.toUpperCase(),
+                        onPressed: _isFormValid
+                            ? () async {
+                                var request = await RequestAPI.hasRegister(
+                                    FormDataModel.cpf);
+                                if (request == true) {
+                                  Navigator.of(context).pushNamed('/scan_page');
+                                } else {
+                                  setState(() {
+                                    _isRegistered = false;
+                                  });
+                                }
+                              }
+                            : null,
+                      );
+                    },
+                  ),
               ],
             ),
           ),
@@ -159,4 +154,9 @@ class _HomePageState extends State<_HomePageContent> {
       ),
     );
   }
+
+  var maskCPFFormatter = MaskTextInputFormatter(
+      mask: '###.###.###-##',
+      filter: {"#": RegExp(r'[0-9]')},
+      type: MaskAutoCompletionType.lazy);
 }

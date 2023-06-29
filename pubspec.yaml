@@ -23,6 +23,7 @@ dependencies:
   flutter_image_compress: ^2.0.3
   path: ^1.8.0
   image: ^4.0.13
+  mask_text_input_formatter: ^2.4.0
 
 dev_dependencies:
   flutter_test:
@@ -40,3 +41,8 @@ flutter:
           weight: 700
         - asset: assets/fonts/TTTravels-Regular.otf
           weight: 400
+
+    - family: Photo-Signature
+      fonts:
+        - asset: assets/fonts/Photo-Signature.ttf
+          weight: 700

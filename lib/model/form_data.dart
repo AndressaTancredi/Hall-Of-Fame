@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 class FormDataModel with ChangeNotifier {
   static String name = "";
+  static String cpf = "";
   static String phone = "";
   static String email = "";
   static Uint8List? image;
@@ -11,6 +12,11 @@ class FormDataModel with ChangeNotifier {
 
   void updateName(String value) {
     name = value;
+    notifyListeners();
+  }
+
+  void updateCPF(String value) {
+    cpf = value;
     notifyListeners();
   }
 
