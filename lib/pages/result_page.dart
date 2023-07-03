@@ -115,7 +115,7 @@ class _ResultPageState extends State<ResultPage> {
                           ? Button(
                               title: CommonStrings.errorTryAgain.toUpperCase(),
                               onPressed: () {
-                                Navigator.of(context).pushNamed('/home_page');
+                                Navigator.of(context).pushNamed('/start_page');
                               },
                             )
                           : Button(

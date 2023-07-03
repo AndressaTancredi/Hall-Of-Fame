@@ -21,7 +21,7 @@ class SharePage extends StatelessWidget {
         body: SingleChildScrollView(
           child: Padding(
             padding:
-                const EdgeInsets.symmetric(vertical: 50.0, horizontal: 120.0),
+                const EdgeInsets.symmetric(vertical: 30.0, horizontal: 120.0),
             child: Column(
               children: [
                 Center(
@@ -31,16 +31,16 @@ class SharePage extends StatelessWidget {
                     textAlign: TextAlign.justify,
                   ),
                 ),
-                const SizedBox(height: 50),
+                const SizedBox(height: 30),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 150.0),
                   child: Image.network(
                     FormDataModel.qrCode,
                     fit: BoxFit.contain,
-                    height: 600,
+                    height: 500,
                   ),
                 ),
-                const SizedBox(height: 50),
+                const SizedBox(height: 30),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 50.0),
                   child: Text(
@@ -52,33 +52,33 @@ class SharePage extends StatelessWidget {
                 ),
                 const Padding(
                   padding:
-                      EdgeInsets.symmetric(horizontal: 150.0, vertical: 50),
+                      EdgeInsets.symmetric(horizontal: 150.0, vertical: 30),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Icon(
                         FontAwesomeIcons.instagram,
-                        size: 100,
+                        size: 90,
                         color: Colors.white,
                       ),
                       Icon(
                         FontAwesomeIcons.facebook,
-                        size: 100,
+                        size: 90,
                         color: Colors.white,
                       ),
                       Icon(
                         FontAwesomeIcons.whatsapp,
-                        size: 100,
+                        size: 90,
                         color: Colors.white,
                       ),
                     ],
                   ),
                 ),
-                const SizedBox(height: 50),
+                const SizedBox(height: 30),
                 Button(
                   title: CommonStrings.restart.toUpperCase(),
                   onPressed: () =>
-                      Navigator.of(context).pushNamed('/home_page'),
+                      Navigator.of(context).pushNamed('/start_page'),
                 ),
               ],
             ),
