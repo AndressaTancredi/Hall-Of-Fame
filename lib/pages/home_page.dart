@@ -61,7 +61,7 @@ class _HomePageState extends State<_HomePageContent> {
               children: [
                 Padding(
                   padding: const EdgeInsets.symmetric(
-                      horizontal: 50.0, vertical: 150),
+                      horizontal: 50.0, vertical: 120),
                   child: Text(
                     CommonStrings.hallOfFame.toUpperCase(),
                     style: titleStyle.copyWith(
@@ -106,7 +106,7 @@ class _HomePageState extends State<_HomePageContent> {
                 if (_isRegistered == false)
                   Padding(
                     padding: const EdgeInsets.symmetric(
-                        horizontal: 50.0, vertical: 150),
+                        horizontal: 50.0, vertical: 100),
                     child: Text(
                       "Você deve fazer o pré-cadastro no hall de entrada do Palácio dos Festivais",
                       style: subtitleStyle.copyWith(
@@ -116,7 +116,7 @@ class _HomePageState extends State<_HomePageContent> {
                 if (_isRegistered == true)
                   Padding(
                     padding: const EdgeInsets.symmetric(
-                        horizontal: 50.0, vertical: 150),
+                        horizontal: 50.0, vertical: 100),
                     child: Text(
                       "Lembre-se de realizar seu cadastro no piso inferior",
                       style: subtitleStyle.copyWith(
