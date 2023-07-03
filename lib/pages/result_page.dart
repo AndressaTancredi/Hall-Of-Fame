@@ -155,7 +155,7 @@ class _ResultPageState extends State<ResultPage> {
 
     if (capturedImage != null) {
       final img.Image image = img.decodeImage(capturedImage)!;
-      final jpegBytes = img.encodeJpg(image, quality: 40);
+      final jpegBytes = img.encodeJpg(image, quality: 45);
       await File(imagePath).writeAsBytes(jpegBytes);
     } else {
       throw Exception('Failed to decode image');

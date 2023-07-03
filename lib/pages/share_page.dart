@@ -21,7 +21,7 @@ class SharePage extends StatelessWidget {
         body: SingleChildScrollView(
           child: Padding(
             padding:
-                const EdgeInsets.symmetric(vertical: 30.0, horizontal: 90.0),
+                const EdgeInsets.symmetric(vertical: 40.0, horizontal: 90.0),
             child: Column(
               children: [
                 Center(
