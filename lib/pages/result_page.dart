@@ -82,9 +82,10 @@ class _ResultPageState extends State<ResultPage> {
                             height: 1100,
                           ),
                           Positioned.fill(
-                            bottom: -480,
+                            bottom: -470,
+                            left: 10,
                             child: Padding(
-                              padding: const EdgeInsets.all(194.0),
+                              padding: const EdgeInsets.all(184.0),
                               child: Image.memory(
                                 widget.photo,
                               ),
@@ -149,13 +150,12 @@ class _ResultPageState extends State<ResultPage> {
 
   Future<void> shareQrCode() async {
     final capturedImage = await Utils.capture(key1);
-
     final tempDir = await getTemporaryDirectory();
     final imagePath = '${tempDir.path}/result_image.jpg';
 
     if (capturedImage != null) {
       final img.Image image = img.decodeImage(capturedImage)!;
-      final jpegBytes = img.encodeJpg(image, quality: 80);
+      final jpegBytes = img.encodeJpg(image, quality: 40);
       await File(imagePath).writeAsBytes(jpegBytes);
     } else {
       throw Exception('Failed to decode image');

@@ -21,7 +21,7 @@ class SharePage extends StatelessWidget {
         body: SingleChildScrollView(
           child: Padding(
             padding:
-                const EdgeInsets.symmetric(vertical: 30.0, horizontal: 120.0),
+                const EdgeInsets.symmetric(vertical: 30.0, horizontal: 90.0),
             child: Column(
               children: [
                 Center(
@@ -31,7 +31,7 @@ class SharePage extends StatelessWidget {
                     textAlign: TextAlign.justify,
                   ),
                 ),
-                const SizedBox(height: 30),
+                const SizedBox(height: 50),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 150.0),
                   child: Image.network(
@@ -40,7 +40,7 @@ class SharePage extends StatelessWidget {
                     height: 500,
                   ),
                 ),
-                const SizedBox(height: 30),
+                const SizedBox(height: 50),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 50.0),
                   child: Text(
