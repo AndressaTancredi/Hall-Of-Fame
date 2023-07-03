@@ -42,6 +42,9 @@ class _TextFieldFormState extends State<TextFieldForm> {
             style: widget.titleStyle,
           ),
           TextFormField(
+            onTapOutside: (event) {
+              FocusManager.instance.primaryFocus?.unfocus();
+            },
             inputFormatters: widget.maskFormatter,
             controller: widget.controller,
             cursorColor: AppColors.yellow,
