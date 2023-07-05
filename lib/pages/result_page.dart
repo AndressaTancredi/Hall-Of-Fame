@@ -82,9 +82,10 @@ class _ResultPageState extends State<ResultPage> {
                             height: 1100,
                           ),
                           Positioned.fill(
-                            bottom: -480,
+                            bottom: -470,
+                            left: 10,
                             child: Padding(
-                              padding: const EdgeInsets.all(194.0),
+                              padding: const EdgeInsets.all(184.0),
                               child: Image.memory(
                                 widget.photo,
                               ),
@@ -115,7 +116,7 @@ class _ResultPageState extends State<ResultPage> {
                           ? Button(
                               title: CommonStrings.errorTryAgain.toUpperCase(),
                               onPressed: () {
-                                Navigator.of(context).pushNamed('/home_page');
+                                Navigator.of(context).pushNamed('/start_page');
                               },
                             )
                           : Button(
@@ -148,7 +149,6 @@ class _ResultPageState extends State<ResultPage> {
 
   Future<void> shareQrCode() async {
     final capturedImage = await Utils.capture(key1);
-
     final tempDir = await getTemporaryDirectory();
     final imagePath = '${tempDir.path}/result_image.jpg';
 

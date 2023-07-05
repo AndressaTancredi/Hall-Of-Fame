@@ -89,6 +89,9 @@ class _HomePageState extends State<_HomePageContent> {
                           title: "Insira seu CPF:",
                           controller: _cpfController,
                           onChanged: (value) {
+                            if (value.length >= 14) {
+                              FocusManager.instance.primaryFocus?.unfocus();
+                            }
                             var cpfFormatted1 = value.replaceAll("-", "");
                             var cpfFormatted2 =
                                 cpfFormatted1.replaceAll(".", "");
