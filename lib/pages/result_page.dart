@@ -132,7 +132,6 @@ class _ResultPageState extends State<ResultPage> {
                                       .pushNamed('/share_page');
                                 } catch (error) {
                                   setState(() {
-                                    print(error);
                                     isError = true;
                                     isLoading = false;
                                   });
@@ -153,15 +152,10 @@ class _ResultPageState extends State<ResultPage> {
     final tempDir = await getTemporaryDirectory();
     final imagePath = '${tempDir.path}/result_image.jpg';
 
-    if (capturedImage != null) {
-      final img.Image image = img.decodeImage(capturedImage)!;
-      final jpegBytes = img.encodeJpg(image, quality: 45);
-      await File(imagePath).writeAsBytes(jpegBytes);
-    } else {
-      throw Exception('Failed to decode image');
-    }
+    final img.Image image = img.decodeImage(capturedImage)!;
+    final jpegBytes = img.encodeJpg(image, quality: 35);
+    await File(imagePath).writeAsBytes(jpegBytes);
 
-    FormDataModel().updatePhoto(widget.photo);
     final name = FormDataModel.name;
     final phone = FormDataModel.phone;
     final email = FormDataModel.email;
