@@ -31,6 +31,11 @@ class _ResultPageState extends State<ResultPage> {
   Uint8List? bytes1;
   bool isLoading = false;
   bool isError = false;
+  String imagePath2 = "";
+  final name = FormDataModel.name;
+  final phone = FormDataModel.phone;
+  final email = FormDataModel.email;
+  final cpf = FormDataModel.cpf;
 
   TextStyle get titleStyle => sl<TextStyles>().titleYellow;
   TextStyle get bodyStyle => sl<TextStyles>().titleDarkBold;
@@ -44,6 +49,10 @@ class _ResultPageState extends State<ResultPage> {
     Random random = Random();
     int randomIndex = random.nextInt(imagePaths.length);
     String randomImagePath = imagePaths[randomIndex];
+
+    Future.delayed(const Duration(seconds: 1), () async {
+      await getImageKey();
+    });
 
     return SafeArea(
       child: Scaffold(
@@ -70,39 +79,42 @@ class _ResultPageState extends State<ResultPage> {
                     ),
                     borderRadius: const BorderRadius.all(Radius.circular(40)),
                   ),
-                  child: WidgetToImage(builder: (key) {
-                    key1 = key;
-                    return ClipRRect(
-                      borderRadius: const BorderRadius.all(Radius.circular(40)),
-                      child: Stack(
-                        children: [
-                          Image.asset(
-                            randomImagePath,
-                            fit: BoxFit.contain,
-                            height: 1100,
-                          ),
-                          Positioned.fill(
-                            bottom: -470,
-                            left: 10,
-                            child: Padding(
-                              padding: const EdgeInsets.all(184.0),
-                              child: Image.memory(
-                                widget.photo,
+                  child: WidgetToImage(
+                    builder: (key) {
+                      key1 = key;
+                      return ClipRRect(
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(40)),
+                        child: Stack(
+                          children: [
+                            Image.asset(
+                              randomImagePath,
+                              fit: BoxFit.contain,
+                              height: 1100,
+                            ),
+                            Positioned.fill(
+                              bottom: -470,
+                              left: 10,
+                              child: Padding(
+                                padding: const EdgeInsets.all(184.0),
+                                child: Image.memory(
+                                  widget.photo,
+                                ),
                               ),
                             ),
-                          ),
-                          Positioned.fill(
-                            top: 845,
-                            left: 412,
-                            child: Text(
-                              getDataTime(),
-                              style: dateStyle,
+                            Positioned.fill(
+                              top: 845,
+                              left: 412,
+                              child: Text(
+                                getDataTime(),
+                                style: dateStyle,
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
-                    );
-                  }),
+                          ],
+                        ),
+                      );
+                    },
+                  ),
                 ),
                 const SizedBox(height: 50.0),
                 Padding(
@@ -125,16 +137,17 @@ class _ResultPageState extends State<ResultPage> {
                                 setState(() {
                                   isLoading = true;
                                 });
-
                                 try {
-                                  await shareQrCode();
+                                  await getQrCode();
                                   Navigator.of(context)
                                       .pushNamed('/share_page');
                                 } catch (error) {
-                                  setState(() {
-                                    isError = true;
-                                    isLoading = false;
-                                  });
+                                  setState(
+                                    () {
+                                      isError = true;
+                                      isLoading = false;
+                                    },
+                                  );
                                 }
                               },
                             ),
@@ -147,7 +160,7 @@ class _ResultPageState extends State<ResultPage> {
     );
   }
 
-  Future<void> shareQrCode() async {
+  Future<void> getImageKey() async {
     final capturedImage = await Utils.capture(key1);
     final tempDir = await getTemporaryDirectory();
     final imagePath = '${tempDir.path}/result_image.jpg';
@@ -155,12 +168,11 @@ class _ResultPageState extends State<ResultPage> {
     final img.Image image = img.decodeImage(capturedImage)!;
     final jpegBytes = img.encodeJpg(image, quality: 35);
     await File(imagePath).writeAsBytes(jpegBytes);
+    imagePath2 = imagePath;
+  }
 
-    final name = FormDataModel.name;
-    final phone = FormDataModel.phone;
-    final email = FormDataModel.email;
-    final cpf = FormDataModel.cpf;
-    await RequestAPI.getQrCode(name, phone, email, cpf, imagePath);
+  Future<void> getQrCode() async {
+    await RequestAPI.getQrCode(name, phone, email, cpf, imagePath2);
   }
 
   String getDataTime() {
