@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -6,22 +8,30 @@ import '../common/common_strings.dart';
 import '../common/injection_container.dart';
 import '../common/text_styles.dart';
 import '../model/form_data.dart';
-import '../widget/button.dart';
 
-class SharePage extends StatelessWidget {
+class SharePage extends StatefulWidget {
   const SharePage({Key? key}) : super(key: key);
+
+  @override
+  State<SharePage> createState() => _SharePageState();
+}
+
+class _SharePageState extends State<SharePage> {
   TextStyle get titleStyle => sl<TextStyles>().titleYellow;
   TextStyle get subTitleStyle => sl<TextStyles>().titleDarkBold;
 
   @override
   Widget build(BuildContext context) {
+    Future.delayed(const Duration(seconds: 20), () async {
+      await Navigator.of(context).pushNamed('/start_page');
+    });
     return SafeArea(
       child: Scaffold(
         backgroundColor: AppColors.primary,
         body: SingleChildScrollView(
           child: Padding(
             padding:
-                const EdgeInsets.symmetric(vertical: 40.0, horizontal: 90.0),
+                const EdgeInsets.symmetric(vertical: 50.0, horizontal: 90.0),
             child: Column(
               children: [
                 Center(
@@ -52,33 +62,27 @@ class SharePage extends StatelessWidget {
                 ),
                 const Padding(
                   padding:
-                      EdgeInsets.symmetric(horizontal: 150.0, vertical: 30),
+                      EdgeInsets.symmetric(horizontal: 150.0, vertical: 40),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Icon(
                         FontAwesomeIcons.instagram,
-                        size: 90,
+                        size: 100,
                         color: Colors.white,
                       ),
                       Icon(
                         FontAwesomeIcons.facebook,
-                        size: 90,
+                        size: 100,
                         color: Colors.white,
                       ),
                       Icon(
                         FontAwesomeIcons.whatsapp,
-                        size: 90,
+                        size: 100,
                         color: Colors.white,
                       ),
                     ],
                   ),
-                ),
-                const SizedBox(height: 30),
-                Button(
-                  title: CommonStrings.restart.toUpperCase(),
-                  onPressed: () =>
-                      Navigator.of(context).pushNamed('/start_page'),
                 ),
               ],
             ),
