@@ -6,7 +6,6 @@ class FormDataModel with ChangeNotifier {
   static String phone = "";
   static String email = "";
   static String? imagePath;
-  static String? qrCode;
 
   void updateName(String value) {
     name = value;
@@ -30,11 +29,6 @@ class FormDataModel with ChangeNotifier {
 
   void updatePhoto(String? value) {
     imagePath = value;
-    notifyListeners();
-  }
-
-  void updateQRCode(String value) {
-    qrCode = value;
     notifyListeners();
   }
 }
