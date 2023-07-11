@@ -87,8 +87,14 @@ class _ScanPageState extends State<ScanPage> {
                   children: [
                     GestureDetector(
                       onTap: () {
-                        if (!startCountdown) {
-                          _startCountdownTimer();
+                        bool singleTap = true;
+                        if (singleTap) {
+                          if (!startCountdown) {
+                            _startCountdownTimer();
+                          }
+                          setState(() {
+                            singleTap = false; // update bool
+                          });
                         }
                       },
                       child: ScanningEffect(

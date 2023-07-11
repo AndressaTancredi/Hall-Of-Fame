@@ -8,13 +8,14 @@ import '../../model/form_data.dart';
 class RequestAPI {
   static const String token = 'YXBwYW5kcm9pZDoyMDIzMDUyNQ==';
 
-  static Future<void> getQrCode(String name, String phone, String email,
-      String cpf, String photoPath) async {
-    if (name.isNotEmpty &&
-        phone.isNotEmpty &&
-        email.isNotEmpty &&
-        cpf.isNotEmpty &&
-        photoPath.isNotEmpty) {
+  static Future<String> getQrCode() async {
+    final name = FormDataModel.name;
+    final phone = FormDataModel.phone;
+    final email = FormDataModel.email;
+    final cpf = FormDataModel.cpf;
+    final photoPath = FormDataModel.imagePath!;
+
+    if (photoPath.isNotEmpty) {
       final url =
           Uri.parse('https://www.tcheofertas.com.br/nova_home/image_upload');
 
@@ -41,7 +42,7 @@ class RequestAPI {
       if (response.statusCode == 200) {
         var responseData = jsonDecode(responseString) as Map<String, dynamic>;
         var imageUrl = responseData['qr_code'];
-        FormDataModel().updateQRCode(imageUrl);
+        return imageUrl;
       } else {
         throw Exception('Erro ao buscar dados');
       }

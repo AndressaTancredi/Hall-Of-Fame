@@ -10,10 +10,6 @@ class Utils {
         key.currentContext!.findRenderObject() as RenderRepaintBoundary;
     ui.Image? image = await boundary.toImage(pixelRatio: 3.0);
 
-    if (image == null) {
-      throw Exception('Failed to capture image');
-    }
-
     ByteData? byteData = await image.toByteData(format: ui.ImageByteFormat.png);
     if (byteData == null) {
       throw Exception('Failed to convert image to byte data');
