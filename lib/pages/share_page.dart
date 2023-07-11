@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:calcada_da_fama/common/data/request_api.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -7,7 +8,6 @@ import '../common/app_colors.dart';
 import '../common/common_strings.dart';
 import '../common/injection_container.dart';
 import '../common/text_styles.dart';
-import '../model/form_data.dart';
 
 class SharePage extends StatefulWidget {
   const SharePage({Key? key}) : super(key: key);
@@ -42,14 +42,34 @@ class _SharePageState extends State<SharePage> {
                   ),
                 ),
                 const SizedBox(height: 50),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 150.0),
-                  child: Image.network(
-                    FormDataModel.qrCode,
-                    fit: BoxFit.contain,
-                    height: 500,
-                  ),
-                ),
+                FutureBuilder<dynamic>(
+                    future: RequestAPI.getQrCode(),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        final imagePath = snapshot.data;
+                        return Padding(
+                          padding:
+                              const EdgeInsets.symmetric(horizontal: 150.0),
+                          child: Image.network(
+                            imagePath,
+                            fit: BoxFit.contain,
+                            height: 500,
+                          ),
+                        );
+                      } else {
+                        return const Padding(
+                          padding: EdgeInsets.symmetric(vertical: 150),
+                          child: SizedBox(
+                            width: 200,
+                            height: 200,
+                            child: CircularProgressIndicator(
+                              valueColor: AlwaysStoppedAnimation<Color>(
+                                  AppColors.yellow),
+                            ),
+                          ),
+                        );
+                      }
+                    }),
                 const SizedBox(height: 50),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 50.0),

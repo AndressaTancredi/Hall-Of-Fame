@@ -9,7 +9,6 @@ import 'package:path_provider/path_provider.dart';
 
 import '../common/app_colors.dart';
 import '../common/common_strings.dart';
-import '../common/data/request_api.dart';
 import '../common/injection_container.dart';
 import '../common/text_styles.dart';
 import '../common/utils.dart';
@@ -31,27 +30,23 @@ class _ResultPageState extends State<ResultPage> {
   Uint8List? bytes1;
   bool isLoading = false;
   bool isError = false;
-  String imagePath2 = "";
-  final name = FormDataModel.name;
-  final phone = FormDataModel.phone;
-  final email = FormDataModel.email;
-  final cpf = FormDataModel.cpf;
+  late String imagePath;
 
   TextStyle get titleStyle => sl<TextStyles>().titleYellow;
   TextStyle get bodyStyle => sl<TextStyles>().titleDarkBold;
   TextStyle get dateStyle => sl<TextStyles>().signatureDate;
 
-  List<String> imagePaths =
+  List<String> starImagePaths =
       List.generate(12, (index) => 'assets/images/${index + 1}.png');
 
   @override
   Widget build(BuildContext context) {
     Random random = Random();
-    int randomIndex = random.nextInt(imagePaths.length);
-    String randomImagePath = imagePaths[randomIndex];
+    int randomIndex = random.nextInt(starImagePaths.length);
+    String randomImagePath = starImagePaths[randomIndex];
 
     Future.delayed(const Duration(seconds: 1), () async {
-      await getImageKey();
+      await getImagePath();
     });
 
     return SafeArea(
@@ -63,13 +58,14 @@ class _ResultPageState extends State<ResultPage> {
                 const EdgeInsets.symmetric(vertical: 25.0, horizontal: 40.0),
             child: Column(
               children: [
-                Center(
-                  child: Text(
-                    CommonStrings.immortalized,
-                    style: titleStyle,
-                    textAlign: TextAlign.center,
+                if (isLoading == false)
+                  Center(
+                    child: Text(
+                      CommonStrings.immortalized,
+                      style: titleStyle,
+                      textAlign: TextAlign.center,
+                    ),
                   ),
-                ),
                 const SizedBox(height: 50),
                 Container(
                   decoration: BoxDecoration(
@@ -79,50 +75,64 @@ class _ResultPageState extends State<ResultPage> {
                     ),
                     borderRadius: const BorderRadius.all(Radius.circular(40)),
                   ),
-                  child: WidgetToImage(
-                    builder: (key) {
-                      key1 = key;
-                      return ClipRRect(
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(40)),
-                        child: Stack(
-                          children: [
-                            Image.asset(
-                              randomImagePath,
-                              fit: BoxFit.contain,
-                              height: 1100,
-                            ),
-                            Positioned.fill(
-                              bottom: -470,
-                              left: 10,
-                              child: Padding(
-                                padding: const EdgeInsets.all(184.0),
-                                child: Image.memory(
-                                  widget.photo,
-                                ),
+                  child: Column(
+                    children: [
+                      if (isLoading == false)
+                        WidgetToImage(
+                          builder: (key) {
+                            key1 = key;
+                            return ClipRRect(
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(40)),
+                              child: Stack(
+                                children: [
+                                  Image.asset(
+                                    randomImagePath,
+                                    fit: BoxFit.contain,
+                                    height: 1100,
+                                  ),
+                                  Positioned.fill(
+                                    bottom: -470,
+                                    left: 10,
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(184.0),
+                                      child: Image.memory(
+                                        widget.photo,
+                                      ),
+                                    ),
+                                  ),
+                                  Positioned.fill(
+                                    top: 845,
+                                    left: 412,
+                                    child: Text(
+                                      getDataTime(),
+                                      style: dateStyle,
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ),
-                            Positioned.fill(
-                              top: 845,
-                              left: 412,
-                              child: Text(
-                                getDataTime(),
-                                style: dateStyle,
-                              ),
-                            ),
-                          ],
+                            );
+                          },
                         ),
-                      );
-                    },
+                    ],
                   ),
                 ),
                 const SizedBox(height: 50.0),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 130.0),
                   child: isLoading
-                      ? const CircularProgressIndicator(
-                          valueColor:
-                              AlwaysStoppedAnimation<Color>(AppColors.yellow),
+                      ? const Center(
+                          child: Padding(
+                            padding: EdgeInsets.only(top: 300),
+                            child: SizedBox(
+                              width: 200,
+                              height: 200,
+                              child: CircularProgressIndicator(
+                                valueColor: AlwaysStoppedAnimation<Color>(
+                                    AppColors.yellow),
+                              ),
+                            ),
+                          ),
                         )
                       : isError
                           ? Button(
@@ -138,9 +148,7 @@ class _ResultPageState extends State<ResultPage> {
                                   isLoading = true;
                                 });
                                 try {
-                                  await getQrCode();
-                                  Navigator.of(context)
-                                      .pushNamed('/share_page');
+                                  navigate();
                                 } catch (error) {
                                   setState(
                                     () {
@@ -160,24 +168,34 @@ class _ResultPageState extends State<ResultPage> {
     );
   }
 
-  Future<void> getImageKey() async {
+  Future<void> getImagePath() async {
     final capturedImage = await Utils.capture(key1);
     final tempDir = await getTemporaryDirectory();
-    final imagePath = '${tempDir.path}/result_image.jpg';
+    imagePath = '${tempDir.path}/result_image.jpg';
 
     final img.Image image = img.decodeImage(capturedImage)!;
     final jpegBytes = img.encodeJpg(image, quality: 35);
     await File(imagePath).writeAsBytes(jpegBytes);
-    imagePath2 = imagePath;
-  }
-
-  Future<void> getQrCode() async {
-    await RequestAPI.getQrCode(name, phone, email, cpf, imagePath2);
+    FormDataModel().updatePhoto(imagePath);
   }
 
   String getDataTime() {
     int timestamp = DateTime.now().millisecondsSinceEpoch;
     DateTime tsDate = DateTime.fromMillisecondsSinceEpoch(timestamp);
     return "${tsDate.day}/${tsDate.month}/${tsDate.year}";
+  }
+
+  void navigate() {
+    setState(
+      () {
+        isLoading = true;
+      },
+    );
+    Future.delayed(
+      const Duration(seconds: 5),
+      () async {
+        Navigator.of(context).pushNamed('/share_page');
+      },
+    );
   }
 }
