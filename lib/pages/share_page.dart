@@ -22,9 +22,9 @@ class _SharePageState extends State<SharePage> {
 
   @override
   Widget build(BuildContext context) {
-    Future.delayed(const Duration(seconds: 20), () async {
-      await Navigator.of(context).pushNamed('/start_page');
-    });
+    // Future.delayed(const Duration(seconds: 20), () async {
+    //   await Navigator.of(context).pushNamed('/start_page');
+    // });
     return SafeArea(
       child: Scaffold(
         backgroundColor: AppColors.primary,
@@ -46,6 +46,9 @@ class _SharePageState extends State<SharePage> {
                     future: RequestAPI.getQrCode(),
                     builder: (context, snapshot) {
                       if (snapshot.hasData) {
+                        Future.delayed(const Duration(seconds: 25), () async {
+                          await Navigator.of(context).pushNamed('/start_page');
+                        });
                         final imagePath = snapshot.data;
                         return Padding(
                           padding:
