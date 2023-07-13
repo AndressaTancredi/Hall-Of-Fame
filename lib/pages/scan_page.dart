@@ -22,6 +22,7 @@ class _ScanPageState extends State<ScanPage> {
   bool showProceedButton = false;
   int countdown = 6;
   Timer? _timer;
+  bool singleTap = true;
 
   TextStyle get titleStyle => sl<TextStyles>().titleDarkBold;
 
@@ -47,6 +48,7 @@ class _ScanPageState extends State<ScanPage> {
   @override
   void dispose() {
     _timer?.cancel();
+    // bool singleTap = false;
     super.dispose();
   }
 
@@ -87,8 +89,7 @@ class _ScanPageState extends State<ScanPage> {
                   children: [
                     GestureDetector(
                       onTap: () {
-                        bool singleTap = true;
-                        if (singleTap) {
+                        if (singleTap == true) {
                           if (!startCountdown) {
                             _startCountdownTimer();
                           }
