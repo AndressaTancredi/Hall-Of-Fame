@@ -1,5 +1,5 @@
 import 'package:calcada_da_fama/model/form_data.dart';
-import 'package:calcada_da_fama/pages/home_page.dart';
+import 'package:calcada_da_fama/pages/start_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           useMaterial3: true,
         ),
-        home: const HomePage(),
+        home: const StartPage(),
         onGenerateRoute: AppRouter().onGeneratedRoute,
       ),
     );

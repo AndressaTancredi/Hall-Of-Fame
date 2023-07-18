@@ -58,7 +58,7 @@ class _ResultPageState extends State<ResultPage> {
                 const EdgeInsets.symmetric(vertical: 25.0, horizontal: 40.0),
             child: Column(
               children: [
-                if (isLoading == false)
+                if (!isLoading)
                   Center(
                     child: Text(
                       CommonStrings.immortalized,
@@ -67,54 +67,53 @@ class _ResultPageState extends State<ResultPage> {
                     ),
                   ),
                 const SizedBox(height: 50),
-                Container(
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      color: AppColors.yellow.withOpacity(0.5),
-                      width: 5,
+                Visibility(
+                  visible: !isLoading,
+                  child: Container(
+                    decoration: const BoxDecoration(
+                      // border: Border.all(
+                      //   color:
+                      //       AppColors.yellow.withOpacity(isLoading ? 0 : 0.5),
+                      //   width: 5,
+                      // ),
+                      borderRadius: BorderRadius.all(Radius.circular(40)),
                     ),
-                    borderRadius: const BorderRadius.all(Radius.circular(40)),
-                  ),
-                  child: Column(
-                    children: [
-                      if (isLoading == false)
-                        WidgetToImage(
-                          builder: (key) {
-                            key1 = key;
-                            return ClipRRect(
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(40)),
-                              child: Stack(
-                                children: [
-                                  Image.asset(
-                                    randomImagePath,
-                                    fit: BoxFit.contain,
-                                    height: 1100,
-                                  ),
-                                  Positioned.fill(
-                                    bottom: -470,
-                                    left: 10,
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(184.0),
-                                      child: Image.memory(
-                                        widget.photo,
-                                      ),
-                                    ),
-                                  ),
-                                  Positioned.fill(
-                                    top: 845,
-                                    left: 412,
-                                    child: Text(
-                                      getDataTime(),
-                                      style: dateStyle,
-                                    ),
-                                  ),
-                                ],
+                    child: WidgetToImage(
+                      builder: (key) {
+                        key1 = key;
+                        return ClipRRect(
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(40)),
+                          child: Stack(
+                            children: [
+                              Image.asset(
+                                randomImagePath,
+                                fit: BoxFit.contain,
+                                height: 1100,
                               ),
-                            );
-                          },
-                        ),
-                    ],
+                              Positioned.fill(
+                                bottom: -470,
+                                left: 10,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(184.0),
+                                  child: Image.memory(
+                                    widget.photo,
+                                  ),
+                                ),
+                              ),
+                              Positioned.fill(
+                                top: 845,
+                                left: 412,
+                                child: Text(
+                                  getDataTime(),
+                                  style: dateStyle,
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                      },
+                    ),
                   ),
                 ),
                 const SizedBox(height: 50.0),
