@@ -168,14 +168,18 @@ class _ResultPageState extends State<ResultPage> {
   }
 
   Future<void> getImagePath() async {
-    final capturedImage = await Utils.capture(key1);
-    final tempDir = await getTemporaryDirectory();
-    imagePath = '${tempDir.path}/result_image.jpg';
+    try {
+      final capturedImage = await Utils.capture(key1);
+      final tempDir = await getTemporaryDirectory();
+      imagePath = '${tempDir.path}/result_image.jpg';
 
-    final img.Image image = img.decodeImage(capturedImage)!;
-    final jpegBytes = img.encodeJpg(image, quality: 35);
-    await File(imagePath).writeAsBytes(jpegBytes);
-    FormDataModel().updatePhoto(imagePath);
+      final img.Image image = img.decodeImage(capturedImage)!;
+      final jpegBytes = img.encodeJpg(image, quality: 35);
+      await File(imagePath).writeAsBytes(jpegBytes);
+      FormDataModel().updatePhoto(imagePath);
+    } catch (e) {
+      debugPrint(e.toString());
+    }
   }
 
   String getDataTime() {

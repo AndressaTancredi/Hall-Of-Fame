@@ -43,36 +43,62 @@ class _SharePageState extends State<SharePage> {
                 ),
                 const SizedBox(height: 50),
                 FutureBuilder<dynamic>(
-                    future: RequestAPI.getQrCode(),
-                    builder: (context, snapshot) {
-                      if (snapshot.hasData) {
-                        Future.delayed(const Duration(seconds: 25), () async {
-                          await Navigator.of(context).pushNamed('/start_page');
-                        });
-                        final imagePath = snapshot.data;
-                        return Padding(
-                          padding:
-                              const EdgeInsets.symmetric(horizontal: 150.0),
-                          child: Image.network(
-                            imagePath,
-                            fit: BoxFit.contain,
-                            height: 500,
+                  future: RequestAPI.getQrCode(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const Padding(
+                        padding: EdgeInsets.symmetric(vertical: 150),
+                        child: SizedBox(
+                          width: 200,
+                          height: 200,
+                          child: CircularProgressIndicator(
+                            valueColor:
+                                AlwaysStoppedAnimation<Color>(AppColors.yellow),
                           ),
-                        );
-                      } else {
-                        return const Padding(
-                          padding: EdgeInsets.symmetric(vertical: 150),
-                          child: SizedBox(
-                            width: 200,
-                            height: 200,
-                            child: CircularProgressIndicator(
-                              valueColor: AlwaysStoppedAnimation<Color>(
-                                  AppColors.yellow),
-                            ),
+                        ),
+                      );
+                    }
+
+                    if (snapshot.hasData) {
+                      Future.delayed(const Duration(seconds: 25), () async {
+                        await Navigator.of(context).pushNamed('/start_page');
+                      });
+                      final imagePath = snapshot.data;
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 150.0),
+                        child: Image.network(
+                          imagePath,
+                          fit: BoxFit.contain,
+                          height: 500,
+                        ),
+                      );
+                    }
+
+                    if (snapshot.hasError) {
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 150),
+                        child: SizedBox(
+                          width: 200,
+                          height: 200,
+                          child: Text(
+                            snapshot.error.toString(),
                           ),
-                        );
-                      }
-                    }),
+                        ),
+                      );
+                    }
+
+                    return const Padding(
+                      padding: EdgeInsets.symmetric(vertical: 150),
+                      child: SizedBox(
+                        width: 200,
+                        height: 200,
+                        child: CircularProgressIndicator(
+                          color: Colors.red,
+                        ),
+                      ),
+                    );
+                  },
+                ),
                 const SizedBox(height: 50),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 50.0),
