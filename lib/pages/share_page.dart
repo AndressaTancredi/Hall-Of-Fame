@@ -3,9 +3,7 @@ import 'dart:async';
 import 'package:calcada_da_fama/common/data/request_api.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:pretty_qr_code/pretty_qr_code.dart';
 import 'package:qr_flutter/qr_flutter.dart';
-
 import '../common/app_colors.dart';
 import '../common/common_strings.dart';
 import '../common/injection_container.dart';
