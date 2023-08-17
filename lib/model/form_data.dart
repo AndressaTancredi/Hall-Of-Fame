@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 
 class FormDataModel with ChangeNotifier {
@@ -6,6 +8,7 @@ class FormDataModel with ChangeNotifier {
   static String phone = "";
   static String email = "";
   static String? imagePath;
+  static Uint8List? imageBytes;
 
   void updateName(String value) {
     name = value;
@@ -29,6 +32,11 @@ class FormDataModel with ChangeNotifier {
 
   void updatePhoto(String? value) {
     imagePath = value;
+    notifyListeners();
+  }
+
+  void updatePhotoBytes(Uint8List? value) {
+    imageBytes = value;
     notifyListeners();
   }
 }

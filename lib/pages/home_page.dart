@@ -132,21 +132,23 @@ class _HomePageState extends State<_HomePageContent> {
                 if (_isRegistered == true)
                   Consumer<FormDataModel>(
                     builder: (context, formDataModel, _) {
-                      return Button(
-                        title: CommonStrings.start.toUpperCase(),
-                        onPressed: _isFormValid
-                            ? () async {
-                                var request = await RequestAPI.hasRegister(
-                                    FormDataModel.cpf);
-                                if (request == true) {
-                                  Navigator.of(context).pushNamed('/scan_page');
-                                } else {
-                                  setState(() {
-                                    _isRegistered = false;
-                                  });
-                                }
+                      return Visibility(
+                        visible: _isFormValid,
+                        child: Button(
+                          title: CommonStrings.start.toUpperCase(),
+                          onPressed: () async {
+                            RequestAPI.hasRegister(FormDataModel.cpf)
+                                .then((value) {
+                              if (value) {
+                                Navigator.of(context).pushNamed('/scan_page');
+                              } else {
+                                setState(() {
+                                  _isRegistered = false;
+                                });
                               }
-                            : null,
+                            });
+                          },
+                        ),
                       );
                     },
                   ),

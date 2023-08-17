@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:calcada_da_fama/common/data/request_api.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:pretty_qr_code/pretty_qr_code.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 
 import '../common/app_colors.dart';
 import '../common/common_strings.dart';
@@ -43,7 +45,7 @@ class _SharePageState extends State<SharePage> {
                 ),
                 const SizedBox(height: 50),
                 FutureBuilder<dynamic>(
-                  future: RequestAPI.getQrCode(),
+                  future: RequestAPI.getImageUrl(context),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return const Padding(
@@ -64,12 +66,25 @@ class _SharePageState extends State<SharePage> {
                         await Navigator.of(context).pushNamed('/start_page');
                       });
                       final imagePath = snapshot.data;
+                      debugPrint(imagePath);
                       return Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 150.0),
-                        child: Image.network(
-                          imagePath,
-                          fit: BoxFit.contain,
-                          height: 500,
+                        // child: Image.network(
+                        //   imagePath,
+                        //   fit: BoxFit.contain,
+                        //   height: 500,
+                        //   loadingBuilder: (context, child, loadingProgress) {
+                        //     return const CircularProgressIndicator(
+                        //       valueColor: AlwaysStoppedAnimation<Color>(
+                        //           AppColors.yellow),
+                        //     );
+                        //   },
+                        // ),
+                        child: QrImageView(
+                          data: imagePath,
+                          version: QrVersions.auto,
+                          backgroundColor: Colors.white,
+                          size: 500.0,
                         ),
                       );
                     }

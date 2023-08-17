@@ -45,10 +45,6 @@ class _ResultPageState extends State<ResultPage> {
     int randomIndex = random.nextInt(starImagePaths.length);
     String randomImagePath = starImagePaths[randomIndex];
 
-    Future.delayed(const Duration(seconds: 1), () async {
-      await getImagePath();
-    });
-
     return SafeArea(
       child: Scaffold(
         backgroundColor: AppColors.primary,
@@ -169,7 +165,10 @@ class _ResultPageState extends State<ResultPage> {
 
   Future<void> getImagePath() async {
     try {
+      var start = DateTime.now();
       final capturedImage = await Utils.capture(key1);
+      var end = DateTime.now();
+
       final tempDir = await getTemporaryDirectory();
       imagePath = '${tempDir.path}/result_image.jpg';
 
@@ -177,6 +176,8 @@ class _ResultPageState extends State<ResultPage> {
       final jpegBytes = img.encodeJpg(image, quality: 35);
       await File(imagePath).writeAsBytes(jpegBytes);
       FormDataModel().updatePhoto(imagePath);
+      var diff = start.difference(end).inMilliseconds;
+      debugPrint("Diff: $diff");
     } catch (e) {
       debugPrint(e.toString());
     }
@@ -188,17 +189,13 @@ class _ResultPageState extends State<ResultPage> {
     return "${tsDate.day}/${tsDate.month}/${tsDate.year}";
   }
 
-  void navigate() {
+  void navigate() async {
     setState(
       () {
         isLoading = true;
       },
     );
-    Future.delayed(
-      const Duration(seconds: 5),
-      () async {
-        Navigator.of(context).pushNamed('/share_page');
-      },
-    );
+    await getImagePath()
+        .then((value) => Navigator.of(context).pushNamed('/share_page'));
   }
 }

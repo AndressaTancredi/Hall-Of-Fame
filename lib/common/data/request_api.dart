@@ -1,14 +1,25 @@
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
 
 import '../../model/form_data.dart';
 
+showMessage(BuildContext context, String msg) {
+  var snackBar = SnackBar(
+    content: Text(msg),
+  );
+
+// Find the ScaffoldMessenger in the widget tree
+// and use it to show a SnackBar.
+  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+}
+
 class RequestAPI {
   static const String token = 'YXBwYW5kcm9pZDoyMDIzMDUyNQ==';
 
-  static Future<String> getQrCode() async {
+  static Future<String> getQrCode(BuildContext context) async {
     final name = FormDataModel.name;
     final phone = FormDataModel.phone;
     final email = FormDataModel.email;
@@ -42,6 +53,51 @@ class RequestAPI {
       if (response.statusCode == 200) {
         var responseData = jsonDecode(responseString) as Map<String, dynamic>;
         var imageUrl = responseData['qr_code'];
+
+        return imageUrl;
+      } else {
+        throw Exception('Erro ao buscar dados');
+      }
+    } else {
+      throw Exception('Dados inválidos');
+    }
+  }
+
+  static Future<String> getImageUrl(BuildContext context) async {
+    final name = FormDataModel.name;
+    final phone = FormDataModel.phone;
+    final email = FormDataModel.email;
+    final cpf = FormDataModel.cpf;
+    final photoPath = FormDataModel.imagePath!;
+
+    if (photoPath.isNotEmpty) {
+      final url =
+          Uri.parse('https://www.tcheofertas.com.br/nova_home/image_upload');
+
+      var headers = {
+        'Authorization': 'Bearer $token',
+      };
+
+      var request = http.MultipartRequest('POST', url);
+      request.headers.addAll(headers);
+      request.fields.addAll(
+          {'nome': name, 'telefone': phone, 'email': email, 'cpf': cpf});
+
+      var multipartFile = await http.MultipartFile.fromPath(
+        'image',
+        photoPath,
+        filename: 'photo.jpg',
+        contentType: MediaType('image', 'jpeg'),
+      );
+      request.files.add(multipartFile);
+
+      var response = await request.send();
+      var responseString = await response.stream.bytesToString();
+
+      if (response.statusCode == 200) {
+        var responseData = jsonDecode(responseString) as Map<String, dynamic>;
+        var imageUrl = responseData['image_url'];
+
         return imageUrl;
       } else {
         throw Exception('Erro ao buscar dados');
