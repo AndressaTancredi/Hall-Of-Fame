@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../common/app_colors.dart';
 import '../common/injection_container.dart';
@@ -9,7 +10,7 @@ class TextFieldForm extends StatefulWidget {
   final String? Function(String?)? validator;
   final TextEditingController controller;
   final ValueChanged<String>? onChanged;
-  final maskFormatter;
+  final List<TextInputFormatter>? maskFormatter;
 
   const TextFieldForm({
     Key? key,

@@ -4,6 +4,7 @@ import 'dart:math';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_animation_progress_bar/flutter_animation_progress_bar.dart';
 import 'package:image/image.dart' as img;
 import 'package:path_provider/path_provider.dart';
 
@@ -35,6 +36,7 @@ class _ResultPageState extends State<ResultPage> {
   TextStyle get titleStyle => sl<TextStyles>().titleYellow;
   TextStyle get bodyStyle => sl<TextStyles>().titleDarkBold;
   TextStyle get dateStyle => sl<TextStyles>().signatureDate;
+  TextStyle get shareStyle => sl<TextStyles>().sharedPageText;
 
   List<String> starImagePaths =
       List.generate(12, (index) => 'assets/images/${index + 1}.png');
@@ -116,16 +118,24 @@ class _ResultPageState extends State<ResultPage> {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 130.0),
                   child: isLoading
-                      ? const Center(
+                      ? Center(
                           child: Padding(
                             padding: EdgeInsets.only(top: 300),
-                            child: SizedBox(
-                              width: 200,
-                              height: 200,
-                              child: CircularProgressIndicator(
-                                valueColor: AlwaysStoppedAnimation<Color>(
-                                    AppColors.yellow),
-                              ),
+                            child: Column(
+                              children: [
+                                Text(
+                                  "A calçada da fama está mais completa agora com você.",
+                                  style: shareStyle,
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                FAProgressBar(
+                                  currentValue: 95,
+                                  animatedDuration: const Duration(seconds: 5),
+                                  progressColor: AppColors.yellow,
+                                ),
+                              ],
                             ),
                           ),
                         )

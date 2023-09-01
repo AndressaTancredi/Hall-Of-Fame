@@ -19,6 +19,14 @@ class TextStyles {
     color: AppColors.primary,
   );
 
+  final sharedPageText = const TextStyle(
+    fontFamily: "TTTravels",
+    fontWeight: FontWeight.w700,
+    fontSize: 24,
+    fontStyle: FontStyle.normal,
+    color: Colors.white,
+  );
+
   final signatureDate = const TextStyle(
     fontFamily: "Photo-Signature",
     fontWeight: FontWeight.w700,
