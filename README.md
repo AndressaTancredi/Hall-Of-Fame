@@ -31,31 +31,14 @@ An application developed for a large event company operating in the southern reg
 
 ## Tech MVP
 
-### `pubspec.yaml`
-
-The `pubspec.yaml` file serves as the central configuration for our Flutter project, detailing dependencies, versions, and environment settings necessary for development. We've incorporated a range of packages to enhance our application's functionality:
-
-- **cupertino_icons:** We utilize this package to access and display Cupertino-style icons, providing a consistent and appealing user interface.
-
 - **get_it:** To facilitate dependency injection, we employ GetIt for efficient and flexible management of service instances across the app.
-
 - **scanning_effect:** For an engaging user experience, we implement the `scanning_effect` package to simulate a hand-scanning effect, creating a visually immersive interaction.
-
 - **signature:** To capture digital signatures, we incorporate the `signature` package, enabling users to sign their names directly on the device's touchscreen.
-
 - **share:** We use the `share` package to empower users to effortlessly share their personalized digital "Walk of Fame" images on their preferred social media platforms.
-
 - **path_provider:** With `path_provider`, we gain access to the device's file system, allowing us to efficiently store and manage image files generated during the app's operation.
-
 - **provider:** To facilitate state management, we adopt the `provider` package, enabling seamless data sharing and updates across various components of our application.
-
 - **http:** We employ the `http` package to interact with external APIs, ensuring secure and efficient communication for user registration and QR code retrieval.
-
-- **image_picker:** Leveraging the `image_picker` package, users can choose images from their device's gallery to enhance their "Walk of Fame" creations.
-
 - **qr_flutter:** For generating QR codes, we integrate the `qr_flutter` package, providing users with a convenient means to share their digital masterpieces via QR codes.
-
-- **flutter_animation_progress_bar:** To enhance the user experience, we employ the `flutter_animation_progress_bar` package to create engaging progress indicators and animations.
 
 These packages collectively enhance the functionality and interactivity of our application, creating a seamless and enjoyable experience for tourists visiting the southern region of Brazil.
 
