@@ -6,7 +6,10 @@ The application interfaces with an API to validate the tourist's registration st
 
 In the subsequent screen, tourists can easily share this image on their social media platforms via a QR code. To facilitate this, the application sends a POST request to the company's API with customer data (retrieved via a prior GET request using the CPF, which is stored during the registration verification process). The POST request returns an image URL, which serves as the QR code for sharing. After a brief interval, the screen automatically returns to the initial interface.
 
-![scan](https://github.com/AndressaTancredi/Hall-Of-Fame/assets/48730376/5ae58e4a-5601-4d34-8f18-5eaceb68add7)
+
+
+https://github.com/AndressaTancredi/Hall-Of-Fame/assets/48730376/af1e1fc4-2694-435a-8ebf-1ef08ffece56
+
 
 
 ## Contents
