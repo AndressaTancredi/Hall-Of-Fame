@@ -120,7 +120,7 @@ class _ResultPageState extends State<ResultPage> {
                   child: isLoading
                       ? Center(
                           child: Padding(
-                            padding: EdgeInsets.only(top: 300),
+                            padding: const EdgeInsets.only(top: 300),
                             child: Column(
                               children: [
                                 Text(

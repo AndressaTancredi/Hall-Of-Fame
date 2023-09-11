@@ -4,6 +4,7 @@ import 'package:calcada_da_fama/common/data/request_api.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:qr_flutter/qr_flutter.dart';
+
 import '../common/app_colors.dart';
 import '../common/common_strings.dart';
 import '../common/injection_container.dart';
@@ -22,9 +23,9 @@ class _SharePageState extends State<SharePage> {
 
   @override
   Widget build(BuildContext context) {
-    // Future.delayed(const Duration(seconds: 20), () async {
-    //   await Navigator.of(context).pushNamed('/start_page');
-    // });
+    Future.delayed(const Duration(seconds: 20), () async {
+      await Navigator.of(context).pushNamed('/start_page');
+    });
     return SafeArea(
       child: Scaffold(
         backgroundColor: AppColors.primary,
@@ -67,17 +68,6 @@ class _SharePageState extends State<SharePage> {
                       debugPrint(imagePath);
                       return Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 150.0),
-                        // child: Image.network(
-                        //   imagePath,
-                        //   fit: BoxFit.contain,
-                        //   height: 500,
-                        //   loadingBuilder: (context, child, loadingProgress) {
-                        //     return const CircularProgressIndicator(
-                        //       valueColor: AlwaysStoppedAnimation<Color>(
-                        //           AppColors.yellow),
-                        //     );
-                        //   },
-                        // ),
                         child: QrImageView(
                           data: imagePath,
                           version: QrVersions.auto,
@@ -86,7 +76,6 @@ class _SharePageState extends State<SharePage> {
                         ),
                       );
                     }
-
                     if (snapshot.hasError) {
                       return Padding(
                         padding: const EdgeInsets.symmetric(vertical: 150),

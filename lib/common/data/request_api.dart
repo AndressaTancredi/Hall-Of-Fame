@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
 
@@ -10,14 +11,14 @@ showMessage(BuildContext context, String msg) {
   var snackBar = SnackBar(
     content: Text(msg),
   );
-
-// Find the ScaffoldMessenger in the widget tree
-// and use it to show a SnackBar.
   ScaffoldMessenger.of(context).showSnackBar(snackBar);
 }
 
 class RequestAPI {
-  static const String token = 'YXBwYW5kcm9pZDoyMDIzMDUyNQ==';
+  static String? token = dotenv.env['TOKEN_API'];
+  static String? qrCodeUrl = dotenv.env['QRCODE_URL'];
+  static String? hasUserRegister = dotenv.env['HAS_REGISTER_URL'];
+  static String? imageUrl = dotenv.env['IMAGE_URL'];
 
   static Future<String> getQrCode(BuildContext context) async {
     final name = FormDataModel.name;
@@ -27,8 +28,7 @@ class RequestAPI {
     final photoPath = FormDataModel.imagePath!;
 
     if (photoPath.isNotEmpty) {
-      final url =
-          Uri.parse('https://www.tcheofertas.com.br/nova_home/image_upload');
+      final url = Uri.parse(qrCodeUrl!);
 
       var headers = {
         'Authorization': 'Bearer $token',
@@ -71,8 +71,7 @@ class RequestAPI {
     final photoPath = FormDataModel.imagePath!;
 
     if (photoPath.isNotEmpty) {
-      final url =
-          Uri.parse('https://www.tcheofertas.com.br/nova_home/image_upload');
+      final url = Uri.parse(imageUrl!);
 
       var headers = {
         'Authorization': 'Bearer $token',
@@ -109,8 +108,7 @@ class RequestAPI {
 
   static Future<bool> hasRegister(String cpf) async {
     if (cpf.isNotEmpty) {
-      final url = Uri.parse(
-          'https://www.tcheofertas.com.br/nova_home/getUserbyCpf/$cpf');
+      final url = Uri.parse('$hasUserRegister$cpf');
 
       final response = await http.get(url, headers: {
         'Authorization': 'Bearer $token',
