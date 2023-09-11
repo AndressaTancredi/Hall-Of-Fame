@@ -1,16 +1,16 @@
 class CommonStrings {
-  static String get name => "Nome";
-  static String get nameRequired => 'O nome é obrigatório.';
-  static String get phoneNumber => "Telefone";
-  static String get phoneNumberRequired => "O telefone é obrigatório.";
-  static String get onlyNumber => 'Somente números.';
-  static String get email => 'E-mail';
-  static String get emailRequired => 'O e-mail é obrigatório.';
-  static String get validEmail => 'Insira um e-mail válido.';
-  static String get voucher => "Voucher";
+  static String get cpfInput => "Insira seu CPF:";
   static String get start => "Começar";
   static String get restart => "Recomeçar";
   static String get hallOfFame => "Calçada da Fama";
+  static String get registerOrientation =>
+      "Você deve fazer o pré-cadastro no hall de entrada do Palácio dos Festivais";
+  static String get registerInfo =>
+      "Lembre-se de realizar seu cadastro no piso inferior";
+  static String get hallOfFameForYou =>
+      "A calçada da fama está mais completa agora com você.";
+  static String get shareSocialMedia =>
+      "Compartilhe nas redes sociais com seu celular";
   static String get scanOrientation =>
       "Posicione suas mãos na tela para serem escaneadas.";
   static String get signatureOrientation => "Agora capriche no seu autógrafo!";
@@ -24,6 +24,10 @@ class CommonStrings {
   static String get time => "Tempo restante: ";
   static String get errorImageToSignature =>
       'Failed to convert signature to image.';
+  static String get getDataError => 'Erro ao buscar dados.';
+  static String get invalidDataError => 'Dados inválidos.';
+  static String get imageToDataError =>
+      'Falaha ao converter imagem para data bytes.';
   static String get errorTryAgain => "Erro ao compartilhar \n Tente novamente";
   static String get shareOrientation =>
       "Aponte a câmera do seu celular para a imagem abaixo e compartilhe seu registro na Calçada da Fama nas redes sociais ";

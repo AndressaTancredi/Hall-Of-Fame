@@ -86,7 +86,7 @@ class _HomePageState extends State<_HomePageContent> {
                       children: [
                         TextFieldForm(
                           maskFormatter: [maskCPFFormatter],
-                          title: "Insira seu CPF:",
+                          title: CommonStrings.cpfInput,
                           controller: _cpfController,
                           onChanged: (value) {
                             if (value.length >= 14) {
@@ -108,7 +108,7 @@ class _HomePageState extends State<_HomePageContent> {
                     padding: const EdgeInsets.symmetric(
                         horizontal: 50.0, vertical: 150),
                     child: Text(
-                      "Você deve fazer o pré-cadastro no hall de entrada do Palácio dos Festivais",
+                      CommonStrings.registerOrientation,
                       style: subtitleStyle.copyWith(
                           fontSize: 40, color: Colors.white),
                     ),
@@ -118,14 +118,14 @@ class _HomePageState extends State<_HomePageContent> {
                     padding: const EdgeInsets.symmetric(
                         horizontal: 50.0, vertical: 150),
                     child: Text(
-                      "Lembre-se de realizar seu cadastro no piso inferior",
+                      CommonStrings.registerInfo,
                       style: subtitleStyle.copyWith(
                           fontSize: 40, color: Colors.white),
                     ),
                   ),
                 if (_isRegistered == false)
                   Button(
-                    title: "RECOMEÇAR",
+                    title: CommonStrings.restart.toUpperCase(),
                     onPressed: () =>
                         Navigator.of(context).pushNamed('/start_page'),
                   ),

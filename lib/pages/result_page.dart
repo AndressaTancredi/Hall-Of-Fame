@@ -69,11 +69,6 @@ class _ResultPageState extends State<ResultPage> {
                   visible: !isLoading,
                   child: Container(
                     decoration: const BoxDecoration(
-                      // border: Border.all(
-                      //   color:
-                      //       AppColors.yellow.withOpacity(isLoading ? 0 : 0.5),
-                      //   width: 5,
-                      // ),
                       borderRadius: BorderRadius.all(Radius.circular(40)),
                     ),
                     child: WidgetToImage(
@@ -124,7 +119,7 @@ class _ResultPageState extends State<ResultPage> {
                             child: Column(
                               children: [
                                 Text(
-                                  "A calçada da fama está mais completa agora com você.",
+                                  CommonStrings.hallOfFameForYou,
                                   style: shareStyle,
                                 ),
                                 const SizedBox(

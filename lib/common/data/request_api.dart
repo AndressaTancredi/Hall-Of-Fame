@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:calcada_da_fama/common/common_strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
@@ -56,10 +57,10 @@ class RequestAPI {
 
         return imageUrl;
       } else {
-        throw Exception('Erro ao buscar dados');
+        throw Exception(CommonStrings.getDataError);
       }
     } else {
-      throw Exception('Dados inválidos');
+      throw Exception(CommonStrings.invalidDataError);
     }
   }
 
@@ -99,10 +100,10 @@ class RequestAPI {
 
         return imageUrl;
       } else {
-        throw Exception('Erro ao buscar dados');
+        throw Exception(CommonStrings.getDataError);
       }
     } else {
-      throw Exception('Dados inválidos');
+      throw Exception(CommonStrings.invalidDataError);
     }
   }
 

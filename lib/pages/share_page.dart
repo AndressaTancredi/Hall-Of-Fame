@@ -105,7 +105,7 @@ class _SharePageState extends State<SharePage> {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 50.0),
                   child: Text(
-                    "Compartilhe nas redes sociais com seu celular",
+                    CommonStrings.shareSocialMedia,
                     style: subTitleStyle.copyWith(
                         color: Colors.white, fontSize: 44),
                     textAlign: TextAlign.center,

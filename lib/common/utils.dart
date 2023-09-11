@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 import 'dart:ui' as ui;
 
+import 'package:calcada_da_fama/common/common_strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
@@ -12,7 +13,7 @@ class Utils {
 
     ByteData? byteData = await image.toByteData(format: ui.ImageByteFormat.png);
     if (byteData == null) {
-      throw Exception('Failed to convert image to byte data');
+      throw Exception(CommonStrings.imageToDataError);
     }
 
     return byteData.buffer.asUint8List();
