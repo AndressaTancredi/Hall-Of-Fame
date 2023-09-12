@@ -1,4 +1,4 @@
-# DIGITAL HAll OF FAME
+# DIGITAL HALL OF FAME
 
 Designed for a large-scale event company operating in the southern region of Brazil, this project involves the creation of a specialized Android application intended for deployment on a 24-inch kiosk. The application offers a comprehensive solution for tourists visiting the region. Tourists can register with the company and access the kiosk using their pre-registered CPF (Brazilian identification number).
 
