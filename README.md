@@ -54,3 +54,5 @@ Currently, the application boasts a robust architecture based on the MVVM (Model
 
 These improvements signify our ongoing commitment to the quality and evolution of this project, and we look forward to sharing future updates and features with our user community.
 
+Made with ❤ by Andressa Tancredi.
+
